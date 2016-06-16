@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Routing;
-using System.Web.Mvc;
 using ClassLibrary1;
 using WebApplication1.WWF;
 using System.Data.Entity;
+using System.Web.Http;
 
 namespace WebApplication1.Controllers
 {
@@ -18,12 +16,26 @@ namespace WebApplication1.Controllers
         public Guid ButtonId { get; set; }
         public string Model { get; set; }
     }
-    
 
-    [System.Web.Http.RoutePrefix("api/wwf")]
+
+    public class QueueInfo
+    {
+        public string Name { get; set; }
+
+        public IEnumerable<TaskInfo> Tasks { get; set; }
+    }
+
+    public class TaskInfo
+    {
+        public string Caption { get; set; }
+        public Guid Id { get; set; }
+        public int Number { get; set; }
+    }
+
+    [RoutePrefix("api/wwf")]
     public class WWFController : ApiController
     {
-        [System.Web.Http.HttpPost, System.Web.Http.Route("start")]
+        [HttpPost, Route("start")]
         public UserTaskEntry Start()
         {
             Guid userTaskId;
@@ -37,7 +49,7 @@ namespace WebApplication1.Controllers
             return Get(userTaskId);
         }
 
-        [System.Web.Http.HttpPost, System.Web.Http.Route("click")]
+        [HttpPost, Route("click")]
         public UserTaskEntry Click([FromBody]ClickArgument arg)
         {
             using (var db = new Db())
@@ -49,12 +61,26 @@ namespace WebApplication1.Controllers
             return Get(arg.TaskId);
         }
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public UserTaskEntry Get(Guid id)
         {
             using (var db = new Db())
             {
                 return db.UserTasks.Include(u => u.Buttons).FirstOrDefault(u => u.Id == id);
+            }
+        }
+
+        [HttpGet, Route("queues")]
+        public QueueInfo[] Queues()
+        {
+            using (var db = new Db())
+            {
+                return db.UserTasks.GroupBy(u => u.QueueName)
+                    .Select(g => new QueueInfo()
+                    {
+                        Name = g.Key,
+                        Tasks = g.Select(t => new TaskInfo() {Caption = t.Caption, Id = t.Id, Number = t.Number})
+                    }).ToArray();
             }
         }
     }

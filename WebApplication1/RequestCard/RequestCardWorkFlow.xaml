@@ -1,7 +1,9 @@
 ﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="WebApplication1.Controllers.RequestCardWorkFlow" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="WebApplication1.Controllers.RequestCardWff_1"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:c="clr-namespace:ClassLibrary1;assembly=ClassLibrary1"
+ xmlns:local="clr-namespace:WebApplication1.RequestCard"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
  xmlns:s="clr-namespace:System;assembly=mscorlib"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
@@ -16,6 +18,7 @@
       <x:String>System.Data</x:String>
       <x:String>System.Linq</x:String>
       <x:String>System.Text</x:String>
+      <x:String>WebApplication1.RequestCard</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -89,50 +92,84 @@
       <AssemblyReference>WebApplication1</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <c:UserTask Result="{x:Null}" ViewInputModel="{x:Null}" Caption="Ввод заявления" DisplayName="Задача пользователю" sap2010:WorkflowViewState.IdRef="UserTask_1" QueueName="Менеджер проекты" ViewName="Search">
-    <c:UserTask.Wizard>
-      <ActivityFunc x:TypeArguments="s:Guid, x:String">
-        <ActivityFunc.Argument>
-          <DelegateInArgument x:TypeArguments="s:Guid" Name="__UserTaskId" />
-        </ActivityFunc.Argument>
-        <ActivityFunc.Result>
-          <DelegateOutArgument x:TypeArguments="x:String" Name="Result" />
-        </ActivityFunc.Result>
-        <Pick sap2010:WorkflowViewState.IdRef="Pick_2">
-          <PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_3">
-            <PickBranch.Trigger>
-              <c:Button ClientModel="{x:Null}" Name="Далее" sap2010:WorkflowViewState.IdRef="Button_1" />
-            </PickBranch.Trigger>
-            <Sequence>
-              <c:NextView ViewInputModel="{x:Null}" ViewName="InputPersonInfo" sap2010:WorkflowViewState.IdRef="NextView_1" />
-              <Pick sap2010:WorkflowViewState.IdRef="Pick_1">
-                <PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_1">
-                  <PickBranch.Trigger>
-                    <c:Button ClientModel="{x:Null}" Name="Далее" sap2010:WorkflowViewState.IdRef="Button_2" />
-                  </PickBranch.Trigger>
-                </PickBranch>
-                <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_2">
-                  <PickBranch.Trigger>
-                    <c:Button ClientModel="{x:Null}" Name="Фигня" sap2010:WorkflowViewState.IdRef="Button_3" />
-                  </PickBranch.Trigger>
-                </PickBranch>
-              </Pick>
-              <sap2010:WorkflowViewState.IdRef>Sequence_1</sap2010:WorkflowViewState.IdRef>
-            </Sequence>
-          </PickBranch>
-          <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_4">
-            <PickBranch.Trigger>
-              <c:Button ClientModel="{x:Null}" Name="Отмена" sap2010:WorkflowViewState.IdRef="Button_4" />
-            </PickBranch.Trigger>
-          </PickBranch>
-        </Pick>
-      </ActivityFunc>
-    </c:UserTask.Wizard>
-    <sads:DebugSymbol.Symbol>d0NDOlxnaXRcVGVzdFdXRlxXZWJBcHBsaWNhdGlvbjFcUmVxdWVzdENhcmRcUmVxdWVzdENhcmRXb3JrRmxvdy54YW1sFVwDhAEQAgEBXMkBXNEBAgEVXK0BXL8BAgEUXENcUwIBE2UJgAEQAgECZgt6GAIBBnsLfxgCAQNoD2hqAgERag15GAIBB30PfWsCAQRoNWg8AgESaw9rfwIBD2wPdxYCAQh9NX09AgEFaz5rTwIBEG0RcR4CAQxyEXYeAgEJbxVvcAIBDXQVdHACAQpvO29CAgEOdDt0QgIBCw==</sads:DebugSymbol.Symbol>
-  </c:UserTask>
+  <Sequence sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="local:SearchModel" Name="Search" />
+    </Sequence.Variables>
+    <c:UserTask Result="{x:Null}" ViewInputModel="{x:Null}" Caption="Ввод заявления" DisplayName="Задача пользователю" sap2010:WorkflowViewState.IdRef="UserTask_1" QueueName="Менеджер/Проекты" ViewName="Search">
+      <c:UserTask.Wizard>
+        <ActivityFunc x:TypeArguments="s:Guid, x:String">
+          <ActivityFunc.Argument>
+            <DelegateInArgument x:TypeArguments="s:Guid" Name="__UserTaskId" />
+          </ActivityFunc.Argument>
+          <ActivityFunc.Result>
+            <DelegateOutArgument x:TypeArguments="x:String" Name="Result" />
+          </ActivityFunc.Result>
+          <Pick sap2010:WorkflowViewState.IdRef="Pick_2">
+            <PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_3">
+              <PickBranch.Trigger>
+                <c:ResultButton x:TypeArguments="local:SearchModel" sap2010:WorkflowViewState.IdRef="ResultButton`1_1" Name="Найти">
+                  <c:ResultButton.ClientModel>
+                    <OutArgument x:TypeArguments="local:SearchModel">
+                      <mca:CSharpReference x:TypeArguments="local:SearchModel">Search</mca:CSharpReference>
+                    </OutArgument>
+                  </c:ResultButton.ClientModel>
+                </c:ResultButton>
+              </PickBranch.Trigger>
+              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
+                <c:NextView sap2010:WorkflowViewState.IdRef="NextView_1" ViewName="InputPersonInfo">
+                  <c:NextView.ViewInputModel>
+                    <InArgument x:TypeArguments="x:Object">
+                      <mca:CSharpValue x:TypeArguments="x:Object">Search</mca:CSharpValue>
+                    </InArgument>
+                  </c:NextView.ViewInputModel>
+                </c:NextView>
+                <Pick sap2010:WorkflowViewState.IdRef="Pick_1">
+                  <PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_1">
+                    <PickBranch.Trigger>
+                      <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_2" Name="Далее" />
+                    </PickBranch.Trigger>
+                  </PickBranch>
+                  <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_2">
+                    <PickBranch.Trigger>
+                      <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_3" Name="Фигня" />
+                    </PickBranch.Trigger>
+                  </PickBranch>
+                </Pick>
+              </Sequence>
+            </PickBranch>
+            <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_4">
+              <PickBranch.Trigger>
+                <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_4" Name="Отмена" />
+              </PickBranch.Trigger>
+            </PickBranch>
+          </Pick>
+        </ActivityFunc>
+      </c:UserTask.Wizard>
+    </c:UserTask>
+    <c:UserTask Result="{x:Null}" Caption="Согласование" DisplayName="Задача пользователю" sap2010:WorkflowViewState.IdRef="UserTask_2" QueueName="Администратор/Согласование" ViewName="InputPersonInfo">
+      <c:UserTask.ViewInputModel>
+        <InArgument x:TypeArguments="x:Object">
+          <mca:CSharpValue x:TypeArguments="x:Object">Search</mca:CSharpValue>
+        </InArgument>
+      </c:UserTask.ViewInputModel>
+      <c:UserTask.Wizard>
+        <ActivityFunc x:TypeArguments="s:Guid, x:String">
+          <ActivityFunc.Argument>
+            <DelegateInArgument x:TypeArguments="s:Guid" Name="__UserTaskId" />
+          </ActivityFunc.Argument>
+          <ActivityFunc.Result>
+            <DelegateOutArgument x:TypeArguments="x:String" Name="Result" />
+          </ActivityFunc.Result>
+          <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_5" Name="OK" />
+        </ActivityFunc>
+      </c:UserTask.Wizard>
+    </c:UserTask>
+    <sads:DebugSymbol.Symbol>d0NDOlxnaXRcVGVzdFdXRlxXZWJBcHBsaWNhdGlvbjFcUmVxdWVzdENhcmRcUmVxdWVzdENhcmRXb3JrRmxvdy54YW1sH18DqQEOAgEBYwWVARICAQqWAQWnARICAQJjywFj0wECASZjrwFjwQECASVjRWNVAgEkbAuSARICAQuWAbkBlgHKAQIBCZYBkwGWAa8BAgEIlgErlgE5AgEHmQELmQFPAgEFpAELpAFjAgEDbQ2MARoCAQ+NAQ2RARoCAQykAVykAWACAQRvEXUiAgEedw+LARoCARCPARGPAW0CAQ1yF3JsAgEgb31vhAECAR94EX4eAgEYfxGKARgCARGPAWKPAWoCAQ54U3hkAgEdexd7WwIBGYABE4QBIAIBFYUBE4kBIAIBEoIBF4IBcgIBFocBF4cBcgIBE4IBaIIBbwIBF4cBaIcBbwIBFA==</sads:DebugSymbol.Symbol>
+  </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="Button_1" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="ResultButton`1_1" sap:VirtualizedContainerService.HintSize="261,72" />
       <sap2010:ViewStateData Id="NextView_1" sap:VirtualizedContainerService.HintSize="736,22" />
       <sap2010:ViewStateData Id="Button_2" sap:VirtualizedContainerService.HintSize="261,72" />
       <sap2010:ViewStateData Id="PickBranch_1" sap:VirtualizedContainerService.HintSize="291,330" />
@@ -151,7 +188,16 @@
       <sap2010:ViewStateData Id="PickBranch_4" sap:VirtualizedContainerService.HintSize="291,832" />
       <sap2010:ViewStateData Id="Pick_2" sap:VirtualizedContainerService.HintSize="1233,878" />
       <sap2010:ViewStateData Id="UserTask_1" sap:VirtualizedContainerService.HintSize="1247,950" />
-      <sap2010:ViewStateData Id="WebApplication1.Controllers.RequestCardWff_1" sap:VirtualizedContainerService.HintSize="1287,1030" />
+      <sap2010:ViewStateData Id="Button_5" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="UserTask_2" sap:VirtualizedContainerService.HintSize="1247,144" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="1269,1258">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WebApplication1.Controllers.RequestCardWff_1" sap:VirtualizedContainerService.HintSize="1309,1338" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

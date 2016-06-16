@@ -13,6 +13,7 @@ using System.Windows;
 using System.Workflow.ComponentModel.Compiler;
 using System.Data.Entity;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace ClassLibrary1
 {
@@ -75,7 +76,9 @@ namespace ClassLibrary1
                 Caption = Caption.Get(context),
                 QueueName = QueueName.Get(context),
                 ViewName = ViewName.Get(context),
-                ViewInputModel = JsonConvert.SerializeObject(ViewInputModel.Get(context) ?? new object()),
+                ViewInputModel = JsonConvert.SerializeObject(ViewInputModel.Get(context) ?? new object()
+                    , Formatting.None
+                    , new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
                 WWFId = context.WorkflowInstanceId
             };
 

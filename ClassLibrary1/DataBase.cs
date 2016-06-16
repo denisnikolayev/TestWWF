@@ -18,6 +18,9 @@ namespace ClassLibrary1
         public string ViewInputModel { get; set; }
 
         public Guid WWFId { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Number { get; set; }
         
         public HashSet<ButtonEntry> Buttons { get; set; } = new HashSet<ButtonEntry>();
     }
