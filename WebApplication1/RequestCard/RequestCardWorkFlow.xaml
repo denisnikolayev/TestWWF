@@ -1,0 +1,157 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="WebApplication1.Controllers.RequestCardWorkFlow" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="WebApplication1.Controllers.RequestCardWff_1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:c="clr-namespace:ClassLibrary1;assembly=ClassLibrary1"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Antlr3.Runtime</AssemblyReference>
+      <AssemblyReference>EntityFramework</AssemblyReference>
+      <AssemblyReference>EntityFramework.SqlServer</AssemblyReference>
+      <AssemblyReference>Microsoft.AspNet.Identity.Core</AssemblyReference>
+      <AssemblyReference>Microsoft.AspNet.Identity.EntityFramework</AssemblyReference>
+      <AssemblyReference>Microsoft.AspNet.Identity.Owin</AssemblyReference>
+      <AssemblyReference>Microsoft.CodeDom.Providers.DotNetCompilerPlatform</AssemblyReference>
+      <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>Microsoft.Owin</AssemblyReference>
+      <AssemblyReference>Microsoft.Owin.Host.SystemWeb</AssemblyReference>
+      <AssemblyReference>Microsoft.Owin.Security</AssemblyReference>
+      <AssemblyReference>Microsoft.Owin.Security.Cookies</AssemblyReference>
+      <AssemblyReference>Microsoft.Owin.Security.Facebook</AssemblyReference>
+      <AssemblyReference>Microsoft.Owin.Security.Google</AssemblyReference>
+      <AssemblyReference>Microsoft.Owin.Security.MicrosoftAccount</AssemblyReference>
+      <AssemblyReference>Microsoft.Owin.Security.OAuth</AssemblyReference>
+      <AssemblyReference>Microsoft.Owin.Security.Twitter</AssemblyReference>
+      <AssemblyReference>Microsoft.Web.Infrastructure</AssemblyReference>
+      <AssemblyReference>Owin</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Activities.DurableInstancing</AssemblyReference>
+      <AssemblyReference>System.Activities.Presentation</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.DataAnnotations</AssemblyReference>
+      <AssemblyReference>System.Configuration</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.EnterpriseServices</AssemblyReference>
+      <AssemblyReference>System.Net.Http</AssemblyReference>
+      <AssemblyReference>System.Net.Http.Formatting</AssemblyReference>
+      <AssemblyReference>System.Net.Http.WebRequest</AssemblyReference>
+      <AssemblyReference>System.Runtime.DurableInstancing</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Transactions</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>System.Web</AssemblyReference>
+      <AssemblyReference>System.Web.Abstractions</AssemblyReference>
+      <AssemblyReference>System.Web.ApplicationServices</AssemblyReference>
+      <AssemblyReference>System.Web.DynamicData</AssemblyReference>
+      <AssemblyReference>System.Web.Entity</AssemblyReference>
+      <AssemblyReference>System.Web.Extensions</AssemblyReference>
+      <AssemblyReference>System.Web.Helpers</AssemblyReference>
+      <AssemblyReference>System.Web.Http</AssemblyReference>
+      <AssemblyReference>System.Web.Http.Owin</AssemblyReference>
+      <AssemblyReference>System.Web.Http.WebHost</AssemblyReference>
+      <AssemblyReference>System.Web.Mvc</AssemblyReference>
+      <AssemblyReference>System.Web.Optimization</AssemblyReference>
+      <AssemblyReference>System.Web.Razor</AssemblyReference>
+      <AssemblyReference>System.Web.Routing</AssemblyReference>
+      <AssemblyReference>System.Web.Services</AssemblyReference>
+      <AssemblyReference>System.Web.WebPages</AssemblyReference>
+      <AssemblyReference>System.Web.WebPages.Deployment</AssemblyReference>
+      <AssemblyReference>System.Web.WebPages.Razor</AssemblyReference>
+      <AssemblyReference>WebGrease</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>ClassLibrary1</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>WebApplication1</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <c:UserTask Result="{x:Null}" ViewInputModel="{x:Null}" Caption="Ввод заявления" DisplayName="Задача пользователю" sap2010:WorkflowViewState.IdRef="UserTask_1" QueueName="Менеджер проекты" ViewName="Search">
+    <c:UserTask.Wizard>
+      <ActivityFunc x:TypeArguments="s:Guid, x:String">
+        <ActivityFunc.Argument>
+          <DelegateInArgument x:TypeArguments="s:Guid" Name="__UserTaskId" />
+        </ActivityFunc.Argument>
+        <ActivityFunc.Result>
+          <DelegateOutArgument x:TypeArguments="x:String" Name="Result" />
+        </ActivityFunc.Result>
+        <Pick sap2010:WorkflowViewState.IdRef="Pick_2">
+          <PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_3">
+            <PickBranch.Trigger>
+              <c:Button ClientModel="{x:Null}" Name="Далее" sap2010:WorkflowViewState.IdRef="Button_1" />
+            </PickBranch.Trigger>
+            <Sequence>
+              <c:NextView ViewInputModel="{x:Null}" ViewName="InputPersonInfo" sap2010:WorkflowViewState.IdRef="NextView_1" />
+              <Pick sap2010:WorkflowViewState.IdRef="Pick_1">
+                <PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_1">
+                  <PickBranch.Trigger>
+                    <c:Button ClientModel="{x:Null}" Name="Далее" sap2010:WorkflowViewState.IdRef="Button_2" />
+                  </PickBranch.Trigger>
+                </PickBranch>
+                <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_2">
+                  <PickBranch.Trigger>
+                    <c:Button ClientModel="{x:Null}" Name="Фигня" sap2010:WorkflowViewState.IdRef="Button_3" />
+                  </PickBranch.Trigger>
+                </PickBranch>
+              </Pick>
+              <sap2010:WorkflowViewState.IdRef>Sequence_1</sap2010:WorkflowViewState.IdRef>
+            </Sequence>
+          </PickBranch>
+          <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_4">
+            <PickBranch.Trigger>
+              <c:Button ClientModel="{x:Null}" Name="Отмена" sap2010:WorkflowViewState.IdRef="Button_4" />
+            </PickBranch.Trigger>
+          </PickBranch>
+        </Pick>
+      </ActivityFunc>
+    </c:UserTask.Wizard>
+    <sads:DebugSymbol.Symbol>d0NDOlxnaXRcVGVzdFdXRlxXZWJBcHBsaWNhdGlvbjFcUmVxdWVzdENhcmRcUmVxdWVzdENhcmRXb3JrRmxvdy54YW1sFVwDhAEQAgEBXMkBXNEBAgEVXK0BXL8BAgEUXENcUwIBE2UJgAEQAgECZgt6GAIBBnsLfxgCAQNoD2hqAgERag15GAIBB30PfWsCAQRoNWg8AgESaw9rfwIBD2wPdxYCAQh9NX09AgEFaz5rTwIBEG0RcR4CAQxyEXYeAgEJbxVvcAIBDXQVdHACAQpvO29CAgEOdDt0QgIBCw==</sads:DebugSymbol.Symbol>
+  </c:UserTask>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Button_1" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="NextView_1" sap:VirtualizedContainerService.HintSize="736,22" />
+      <sap2010:ViewStateData Id="Button_2" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="PickBranch_1" sap:VirtualizedContainerService.HintSize="291,330" />
+      <sap2010:ViewStateData Id="Button_3" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="PickBranch_2" sap:VirtualizedContainerService.HintSize="291,330" />
+      <sap2010:ViewStateData Id="Pick_1" sap:VirtualizedContainerService.HintSize="736,376" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="758,562">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="PickBranch_3" sap:VirtualizedContainerService.HintSize="788,832" />
+      <sap2010:ViewStateData Id="Button_4" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="PickBranch_4" sap:VirtualizedContainerService.HintSize="291,832" />
+      <sap2010:ViewStateData Id="Pick_2" sap:VirtualizedContainerService.HintSize="1233,878" />
+      <sap2010:ViewStateData Id="UserTask_1" sap:VirtualizedContainerService.HintSize="1247,950" />
+      <sap2010:ViewStateData Id="WebApplication1.Controllers.RequestCardWff_1" sap:VirtualizedContainerService.HintSize="1287,1030" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
