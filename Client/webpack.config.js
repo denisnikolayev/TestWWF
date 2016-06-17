@@ -30,7 +30,7 @@ module.exports = {
         publicPath: "/"
     },
     resolve: {
-        extensions: [".tsx", ".js", "", ".ts", '.scss', '.png', '.jpg']
+        extensions: [".tsx", ".js", "", ".ts", '.scss', '.png', '.jpg', '.css', '.eot', '.woff', '.ttf', '.woff2', '.svg']
     },
     module: {
         loaders: [
@@ -39,13 +39,13 @@ module.exports = {
             loaders: process.env.NODE_ENV === "development" || process.env.NODE_ENV === "developmentWithoutServer" ? ["react-hot", "babel-loader?presets[]=es2015&presets[]=stage-0", "ts-loader"] : ["babel-loader?presets[]=es2015&presets[]=stage-0", "ts-loader"],
             include: __dirname
         },
-        { test: /\.png|\.jpg$/, loader: "url-loader?limit=100000" },
+        { test: /\.png|\.jpg|\.eot|\.woff|\.ttf|\.woff2|\.svg$/, loader: "url-loader?limit=100000" },
         {
             test: /\.scss$/,
             exclude: /node_modules|lib/,
             loader: 'style!css!sass',
             include: __dirname
-        }]
+        }, { test: /\.css$/, loader: "style-loader!css-loader" }]
     },
     plugins: [        
         new webpack.DefinePlugin({

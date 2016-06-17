@@ -69,7 +69,7 @@ export class RequestCardPage extends React.Component<{}, { userTask?: IUserTask,
         if (userTask) {
             return (<div className="form">
                 <div className="form-body">{this.wizard() }</div>
-                <div className="buttons">{userTask.buttons.map(a => <button key={a.id} onClick={() => this.onClick(a.id) }>{a.name}</button>) }</div>
+                <div className="buttons">{userTask.buttons.map(a => <button className="btn btn-default"  key={a.id} onClick={() => this.onClick(a.id) }>{a.name}</button>) }</div>
             </div>
             );
         } else {

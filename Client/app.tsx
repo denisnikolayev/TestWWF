@@ -1,5 +1,7 @@
 ﻿
 import "babel-polyfill";
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap"
 
 import * as React from "react"
 import {render} from "react-dom";
@@ -10,7 +12,7 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
 export class Layout extends React.Component<{children:any}, {}> {      
     render() {
-        return <div className="sheet">{this.props.children}</div>;
+        return <div className="sheet container">{this.props.children}</div>;
     }
 }
 
