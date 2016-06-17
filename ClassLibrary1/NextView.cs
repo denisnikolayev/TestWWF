@@ -22,7 +22,7 @@ namespace ClassLibrary1
             userTask.ViewName = ViewName.Get(context);
             userTask.ViewInputModel = JsonConvert.SerializeObject(ViewInputModel.Get(context) ?? new object()
                 , Formatting.None
-                , new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()}
+                , new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver(), DateFormatString = "dd.MM.yyyy"}
                 );
         }
     }

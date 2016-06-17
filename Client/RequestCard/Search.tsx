@@ -22,7 +22,7 @@ export class Search extends React.Component<{onChange:(model:ISearchModel)=>void
                     <h2>Поиск клиента</h2>
                     <div className="form-group">
                         <label>ИИН: </label>
-                        <input style={{width:"200px"}} className="form-control" type="text" value={this.state.iin}
+                        <input style={{ width: "200px" }} maxLength={12} className="form-control" type="text" value={this.state.iin}
                             onChange={(e: any) => this.onChange({ iin: e.target.value }) } />
                     </div>
                     <div className="form-group">

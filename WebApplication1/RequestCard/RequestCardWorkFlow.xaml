@@ -108,34 +108,75 @@
           <Pick sap2010:WorkflowViewState.IdRef="Pick_2">
             <PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_3">
               <PickBranch.Trigger>
-                <c:ResultButton x:TypeArguments="local:SearchModel" sap2010:WorkflowViewState.IdRef="ResultButton`1_1" Name="Найти" Priority="10" Style="btn-success">
-                  <c:ResultButton.ClientModel>
-                    <OutArgument x:TypeArguments="local:SearchModel">
-                      <mca:CSharpReference x:TypeArguments="local:SearchModel">Search</mca:CSharpReference>
-                    </OutArgument>
-                  </c:ResultButton.ClientModel>
-                </c:ResultButton>
+                <Sequence sap2010:WorkflowViewState.IdRef="Sequence_3">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:Boolean" Name="IsFound" />
+                  </Sequence.Variables>
+                  <c:ResultButton x:TypeArguments="local:SearchModel" sap2010:WorkflowViewState.IdRef="ResultButton`1_1" Name="Найти" Priority="10" Style="btn-success">
+                    <c:ResultButton.ClientModel>
+                      <OutArgument x:TypeArguments="local:SearchModel">
+                        <mca:CSharpReference x:TypeArguments="local:SearchModel">Search</mca:CSharpReference>
+                      </OutArgument>
+                    </c:ResultButton.ClientModel>
+                  </c:ResultButton>
+                </Sequence>
               </PickBranch.Trigger>
               <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
-                <c:NextView sap2010:WorkflowViewState.IdRef="NextView_1" ViewName="InputPersonInfo">
-                  <c:NextView.ViewInputModel>
-                    <InArgument x:TypeArguments="x:Object">
-                      <mca:CSharpValue x:TypeArguments="x:Object">Search</mca:CSharpValue>
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="local:PersonInfo" Name="Person" />
+                </Sequence.Variables>
+                <c:QueryService x:TypeArguments="local:PersonInfo" DisplayName="Поиск клиента" ServiceName="Search">
+                  <c:QueryService.InParams>
+                    <InArgument x:TypeArguments="s:Object[]">
+                      <mca:CSharpValue x:TypeArguments="s:Object[]">new object[] { Search}</mca:CSharpValue>
                     </InArgument>
-                  </c:NextView.ViewInputModel>
-                </c:NextView>
-                <Pick sap2010:WorkflowViewState.IdRef="Pick_1">
-                  <PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_1">
-                    <PickBranch.Trigger>
-                      <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_2" Name="Далее" Priority="10" Style="btn-success" />
-                    </PickBranch.Trigger>
-                  </PickBranch>
-                  <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_2">
-                    <PickBranch.Trigger>
-                      <c:Button ClientModel="{x:Null}" Priority="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_3" Name="Фигня" Style="btn-danger" />
-                    </PickBranch.Trigger>
-                  </PickBranch>
-                </Pick>
+                  </c:QueryService.InParams>
+                  <c:QueryService.Result>
+                    <OutArgument x:TypeArguments="local:PersonInfo">
+                      <mca:CSharpReference x:TypeArguments="local:PersonInfo">Person</mca:CSharpReference>
+                    </OutArgument>
+                  </c:QueryService.Result>
+                  <sap2010:WorkflowViewState.IdRef>QueryService`1_1</sap2010:WorkflowViewState.IdRef>
+                </c:QueryService>
+                <If>
+                  <If.Condition>
+                    <InArgument x:TypeArguments="x:Boolean">
+                      <mca:CSharpValue x:TypeArguments="x:Boolean">Person != null</mca:CSharpValue>
+                    </InArgument>
+                  </If.Condition>
+                  <If.Then>
+                    <Sequence>
+                      <c:NextView ViewName="InputPersonInfo">
+                        <c:NextView.ViewInputModel>
+                          <InArgument x:TypeArguments="x:Object">
+                            <mca:CSharpValue x:TypeArguments="x:Object">Person</mca:CSharpValue>
+                          </InArgument>
+                        </c:NextView.ViewInputModel>
+                        <sap2010:WorkflowViewState.IdRef>NextView_2</sap2010:WorkflowViewState.IdRef>
+                      </c:NextView>
+                      <Pick>
+                        <PickBranch DisplayName="Branch1">
+                          <PickBranch.Trigger>
+                            <c:Button ClientModel="{x:Null}" Name="Далее" Priority="10" Style="btn-success" sap2010:WorkflowViewState.IdRef="Button_6" />
+                          </PickBranch.Trigger>
+                          <sap2010:WorkflowViewState.IdRef>PickBranch_5</sap2010:WorkflowViewState.IdRef>
+                        </PickBranch>
+                        <PickBranch DisplayName="Branch2">
+                          <PickBranch.Trigger>
+                            <c:Button ClientModel="{x:Null}" Priority="{x:Null}" Name="Фигня" Style="btn-danger" sap2010:WorkflowViewState.IdRef="Button_7" />
+                          </PickBranch.Trigger>
+                          <sap2010:WorkflowViewState.IdRef>PickBranch_6</sap2010:WorkflowViewState.IdRef>
+                        </PickBranch>
+                        <sap2010:WorkflowViewState.IdRef>Pick_3</sap2010:WorkflowViewState.IdRef>
+                      </Pick>
+                      <sap2010:WorkflowViewState.IdRef>Sequence_4</sap2010:WorkflowViewState.IdRef>
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <c:Button ClientModel="{x:Null}" Priority="{x:Null}" Name="Поискать ещё раз" Style="btn-danger" sap2010:WorkflowViewState.IdRef="Button_8" />
+                  </If.Else>
+                  <sap2010:WorkflowViewState.IdRef>If_1</sap2010:WorkflowViewState.IdRef>
+                </If>
               </Sequence>
             </PickBranch>
             <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_4">
@@ -165,39 +206,56 @@
         </ActivityFunc>
       </c:UserTask.Wizard>
     </c:UserTask>
-    <sads:DebugSymbol.Symbol>d0NDOlxnaXRcVGVzdFdXRlxXZWJBcHBsaWNhdGlvbjFcUmVxdWVzdENhcmRcUmVxdWVzdENhcmRXb3JrRmxvdy54YW1sJ18DqQEOAgEBYwWVARICAQuWAQWnARICAQJjywFj0wECAS5jrwFjwQECAS1jRWNVAgEsbAuSARICAQyWAbkBlgHKAQIBCpYBkwGWAa8BAgEJlgErlgE5AgEImQELmQFPAgEGpAELpAGLAQIBA20NjAEaAgESjQENkQEaAgENpAF7pAGIAQIBBaQBcKQBdAIBBG8RdSICASR3D4sBGgIBE48BEY8BjQECAQ5vjgFvkgECAStvmQFvpgECASpyF3JsAgEmb31vhAECASV4EX4eAgEefxGKARgCARSPAXSPAXcCARGPAX6PAYoBAgEQjwFijwFqAgEPeFN4ZAIBI3sXe1sCAR+AAROEASACARmFAROJASACARWCAReCAZQBAgEahwEXhwGZAQIBFoIBeYIBfQIBHYIBhAGCAZEBAgEcggFoggFvAgEbhwGKAYcBlgECARiHAXyHAYMBAgEX</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0NDOlxnaXRcVGVzdFdXRlxXZWJBcHBsaWNhdGlvbjFcUmVxdWVzdENhcmRcUmVxdWVzdENhcmRXb3JrRmxvdy54YW1sMl8D0gEOAgEBYwW+ARICAQu/AQXQARICAQJjywFj0wECAUdjrwFjwQECAUZjRWNVAgFFbAu7ARICAQy/AbkBvwHKAQIBCr8BkwG/Aa8BAgEJvwErvwE5AgEIwgELwgFPAgEGzQELzQGLAQIBA20NtQEaAgEStgENugEaAgENzQF7zQGIAQIBBc0BcM0BdAIBBG8RehwCATt8D7QBGgIBE7gBEbgBjQECAQ5zE3kkAgE8gAERjAEiAgEvjQERswEWAgEUuAF0uAF3AgERuAF+uAGKAQIBELgBYrgBagIBD3OQAXOUAQIBRHObAXOoAQIBQ3YZdm4CAT5zf3OGAQIBPYABbIABdAIBOoMBF4MBbQIBNYgBF4gBawIBMJABF5ABZAIBFZQBFa0BIAIBHbABFbABogECARqVARecASQCASidARerAR4CAR6wAWiwAXQCARywAU+wAWECARuVASyVAT0CAS6YAR2YAWECASmeARmjASYCASOkARmpASYCAR+gAR2gAZoBAgEkpgEdpgGfAQIBIKABVKABWAIBJ6ABX6ABbAIBJqABQ6ABSgIBJaYBZaYBcQIBIqYBV6YBXgIBIQ==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="ResultButton`1_1" sap:VirtualizedContainerService.HintSize="261,72" />
-      <sap2010:ViewStateData Id="NextView_1" sap:VirtualizedContainerService.HintSize="736,22" />
-      <sap2010:ViewStateData Id="Button_2" sap:VirtualizedContainerService.HintSize="261,72" />
-      <sap2010:ViewStateData Id="PickBranch_1" sap:VirtualizedContainerService.HintSize="291,330" />
-      <sap2010:ViewStateData Id="Button_3" sap:VirtualizedContainerService.HintSize="261,72" />
-      <sap2010:ViewStateData Id="PickBranch_2" sap:VirtualizedContainerService.HintSize="291,330" />
-      <sap2010:ViewStateData Id="Pick_1" sap:VirtualizedContainerService.HintSize="736,376" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="758,562">
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="283,196">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="PickBranch_3" sap:VirtualizedContainerService.HintSize="788,832" />
+      <sap2010:ViewStateData Id="QueryService`1_1" sap:VirtualizedContainerService.HintSize="1044,22" />
+      <sap2010:ViewStateData Id="NextView_2" sap:VirtualizedContainerService.HintSize="736,22" />
+      <sap2010:ViewStateData Id="Button_6" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="PickBranch_5" sap:VirtualizedContainerService.HintSize="291,330" />
+      <sap2010:ViewStateData Id="Button_7" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="PickBranch_6" sap:VirtualizedContainerService.HintSize="291,330" />
+      <sap2010:ViewStateData Id="Pick_3" sap:VirtualizedContainerService.HintSize="736,376" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="758,562">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Button_8" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="1044,712" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="1066,898">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="PickBranch_3" sap:VirtualizedContainerService.HintSize="1096,1292" />
       <sap2010:ViewStateData Id="Button_4" sap:VirtualizedContainerService.HintSize="261,72" />
-      <sap2010:ViewStateData Id="PickBranch_4" sap:VirtualizedContainerService.HintSize="291,832" />
-      <sap2010:ViewStateData Id="Pick_2" sap:VirtualizedContainerService.HintSize="1233,878" />
-      <sap2010:ViewStateData Id="UserTask_1" sap:VirtualizedContainerService.HintSize="1247,950" />
+      <sap2010:ViewStateData Id="PickBranch_4" sap:VirtualizedContainerService.HintSize="291,1292" />
+      <sap2010:ViewStateData Id="Pick_2" sap:VirtualizedContainerService.HintSize="1541,1338" />
+      <sap2010:ViewStateData Id="UserTask_1" sap:VirtualizedContainerService.HintSize="1555,1410" />
       <sap2010:ViewStateData Id="Button_5" sap:VirtualizedContainerService.HintSize="261,72" />
-      <sap2010:ViewStateData Id="UserTask_2" sap:VirtualizedContainerService.HintSize="1247,144" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="1269,1258">
+      <sap2010:ViewStateData Id="UserTask_2" sap:VirtualizedContainerService.HintSize="1555,144" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="1577,1718">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WebApplication1.Controllers.RequestCardWff_1" sap:VirtualizedContainerService.HintSize="1309,1338" />
+      <sap2010:ViewStateData Id="WebApplication1.Controllers.RequestCardWff_1" sap:VirtualizedContainerService.HintSize="1617,1798" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

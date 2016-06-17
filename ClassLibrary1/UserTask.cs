@@ -78,7 +78,7 @@ namespace ClassLibrary1
                 ViewName = ViewName.Get(context),
                 ViewInputModel = JsonConvert.SerializeObject(ViewInputModel.Get(context) ?? new object()
                     , Formatting.None
-                    , new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
+                    , new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), DateFormatString = "dd.MM.yyyy" }),
                 WWFId = context.WorkflowInstanceId
             };
 
