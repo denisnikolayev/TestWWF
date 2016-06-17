@@ -12,16 +12,14 @@ using System.Threading;
 using System.Web;
 using System.Xml.Linq;
 using ClassLibrary1;
-using WebApplication1.Controllers;
 
 namespace WebApplication1.WWF
 {
 
     public static class WWFManager
     {
-        public static Guid CreateWorkFlowExecAndSave(Db db)
+        public static Guid CreateWorkFlowExecAndSave(Db db, Activity activity)
         {
-            var activity = new RequestCardWorkFlow();
             var id = Guid.Empty;
             var wf = new WorkflowApplication(activity)
             {
@@ -76,10 +74,8 @@ namespace WebApplication1.WWF
             return id;
         }
 
-        public static void Click(Db db, Guid id, string buttonId, string action)
+        public static void Click(Db db, Activity activity, Guid id, string buttonId, string action)
         {
-            var activity = new RequestCardWorkFlow();
-           
             var wf = new WorkflowApplication(activity)
             {
                 InstanceStore = InstanceStore

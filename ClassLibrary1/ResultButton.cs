@@ -14,7 +14,9 @@ namespace ClassLibrary1
         where T:class
     {
         public InArgument<string> Name { get; set; }
-
+        
+        public InArgument<int> Priority { get; set; }
+        public InArgument<string> Style { get; set; }
         public OutArgument<T> ClientModel { get; set; }
 
 
@@ -29,9 +31,13 @@ namespace ClassLibrary1
             var button = new ButtonEntry()
             {
                 Id = Guid.NewGuid(),
-                Name = Name.Get(context)
+                Name = Name.Get(context),
+                Priority = Priority.Get(context),
+                Style = Style.Get(context) 
             };
 
+            if (string.IsNullOrEmpty(button.Style)) button.Style = "btn-default";
+            
             var userTaskId = (Guid) context.DataContext.GetProperties()["__UserTaskId"].GetValue(context.DataContext);
 
             var userTask = db.UserTasks.Find(userTaskId);

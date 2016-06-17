@@ -41,7 +41,7 @@ namespace WebApplication1.Controllers
             Guid userTaskId;
             using (var db = new Db())
             {
-                var wwfId = WWFManager.CreateWorkFlowExecAndSave(db);
+                var wwfId = WWFManager.CreateWorkFlowExecAndSave(db, new RequestCardWorkFlow());
 
                 userTaskId = db.UserTasks.Single(u => u.WWFId == wwfId).Id;
             }
@@ -55,7 +55,7 @@ namespace WebApplication1.Controllers
             using (var db = new Db())
             {
                 var userTask = db.UserTasks.Find(arg.TaskId);
-                WWFManager.Click(db, userTask.WWFId, arg.ButtonId.ToString(), arg.Model);
+                WWFManager.Click(db, new RequestCardWorkFlow(), userTask.WWFId, arg.ButtonId.ToString(), arg.Model);
             }
 
             return Get(arg.TaskId);

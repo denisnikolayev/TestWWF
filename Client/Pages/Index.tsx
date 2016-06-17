@@ -24,14 +24,15 @@ export class Index extends React.Component<{}, { queues: IQueue[]}> {
         var body = this.state.queues.map(q =>
             <div key={q.name}>
                 <h3>{q.name}</h3>
-                <ul>
+                <ul className="list-unstyled">
                     {q.tasks.map(t => <li> <Link to={`/RequestCard/${t.id}`}>{t.caption} №{t.number}</Link></li>)}
                 </ul>
              </div>
         );
 
-        return (<div>
-                <Link  className="btn btn-blue" to="/RequestCard">Создать Заявку на выпуск карты</Link>
+        return (
+            <div>
+                <Link  className="btn  btn-primary" to="/RequestCard">Создать Заявку на выпуск карты</Link>
                 {body}   
             </div>
             );

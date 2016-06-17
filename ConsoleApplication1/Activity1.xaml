@@ -44,8 +44,8 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
     <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="test" />
-    <c:CodeActivity1 sap2010:WorkflowViewState.IdRef="CodeActivity1_3" Text="in">
-      <c:CodeActivity1.Act>
+    <c:UserTask sap2010:WorkflowViewState.IdRef="UserTask_3" Text="in">
+      <c:UserTask.Act>
         <ActivityFunc x:TypeArguments="x:Int32, x:String">
           <ActivityFunc.Argument>
             <DelegateInArgument x:TypeArguments="x:Int32" Name="Argument" />
@@ -90,10 +90,10 @@
             <x:Reference>__ReferenceID1</x:Reference>
           </StateMachine>
         </ActivityFunc>
-      </c:CodeActivity1.Act>
-    </c:CodeActivity1>
-    <c:CodeActivity1 sap2010:WorkflowViewState.IdRef="CodeActivity1_4" Text="Test2">
-      <c:CodeActivity1.Act>
+      </c:UserTask.Act>
+    </c:UserTask>
+    <c:UserTask sap2010:WorkflowViewState.IdRef="UserTask_4" Text="Test2">
+      <c:UserTask.Act>
         <ActivityFunc x:TypeArguments="x:Int32, x:String">
           <ActivityFunc.Argument>
             <DelegateInArgument x:TypeArguments="x:Int32" Name="Num1" />
@@ -102,8 +102,8 @@
             <DelegateOutArgument x:TypeArguments="x:String" Name="Result" />
           </ActivityFunc.Result>
         </ActivityFunc>
-      </c:CodeActivity1.Act>
-    </c:CodeActivity1>
+      </c:UserTask.Act>
+    </c:UserTask>
     <sads:DebugSymbol.Symbol>dzFDOlxnaXRcVGVzdFdXRlxDb25zb2xlQXBwbGljYXRpb24xXEFjdGl2aXR5MS54YW1sEC0DbA4CAQEuBS5MAgEYLwVeFwIBBF8FahcCAQIuQy5JAgEZL00vUQIBFzgLWxoCAQVfTV9UAgEDPhc+igECARU6D1cXAgEGQRdTIgIBCEIZRiUCARBHGVIiAgEJRB1EdAIBEU8fT3ACAQ1KH0prAgEK</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
@@ -156,7 +156,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="CodeActivity1_3" sap:VirtualizedContainerService.HintSize="249,123">
+      <sap2010:ViewStateData Id="UserTask_3" sap:VirtualizedContainerService.HintSize="249,123">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -164,7 +164,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="CodeActivity1_4" sap:VirtualizedContainerService.HintSize="249,87" />
+      <sap2010:ViewStateData Id="UserTask_4" sap:VirtualizedContainerService.HintSize="249,87" />
       <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="271,476">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">

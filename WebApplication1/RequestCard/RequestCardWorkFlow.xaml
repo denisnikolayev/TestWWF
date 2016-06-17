@@ -41,6 +41,7 @@
       <AssemblyReference>Microsoft.Owin.Security.OAuth</AssemblyReference>
       <AssemblyReference>Microsoft.Owin.Security.Twitter</AssemblyReference>
       <AssemblyReference>Microsoft.Web.Infrastructure</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>Owin</AssemblyReference>
       <AssemblyReference>PresentationCore</AssemblyReference>
       <AssemblyReference>PresentationFramework</AssemblyReference>
@@ -87,7 +88,6 @@
       <AssemblyReference>WebGrease</AssemblyReference>
       <AssemblyReference>WindowsBase</AssemblyReference>
       <AssemblyReference>ClassLibrary1</AssemblyReference>
-      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>WebApplication1</AssemblyReference>
     </sco:Collection>
@@ -108,7 +108,7 @@
           <Pick sap2010:WorkflowViewState.IdRef="Pick_2">
             <PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_3">
               <PickBranch.Trigger>
-                <c:ResultButton x:TypeArguments="local:SearchModel" sap2010:WorkflowViewState.IdRef="ResultButton`1_1" Name="Найти">
+                <c:ResultButton x:TypeArguments="local:SearchModel" sap2010:WorkflowViewState.IdRef="ResultButton`1_1" Name="Найти" Priority="10" Style="btn-success">
                   <c:ResultButton.ClientModel>
                     <OutArgument x:TypeArguments="local:SearchModel">
                       <mca:CSharpReference x:TypeArguments="local:SearchModel">Search</mca:CSharpReference>
@@ -127,12 +127,12 @@
                 <Pick sap2010:WorkflowViewState.IdRef="Pick_1">
                   <PickBranch DisplayName="Branch1" sap2010:WorkflowViewState.IdRef="PickBranch_1">
                     <PickBranch.Trigger>
-                      <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_2" Name="Далее" />
+                      <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_2" Name="Далее" Priority="10" Style="btn-success" />
                     </PickBranch.Trigger>
                   </PickBranch>
                   <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_2">
                     <PickBranch.Trigger>
-                      <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_3" Name="Фигня" />
+                      <c:Button ClientModel="{x:Null}" Priority="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_3" Name="Фигня" Style="btn-danger" />
                     </PickBranch.Trigger>
                   </PickBranch>
                 </Pick>
@@ -140,7 +140,7 @@
             </PickBranch>
             <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_4">
               <PickBranch.Trigger>
-                <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_4" Name="Отмена" />
+                <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_4" Name="Отмена" Priority="0" Style="btn-danger" />
               </PickBranch.Trigger>
             </PickBranch>
           </Pick>
@@ -161,11 +161,11 @@
           <ActivityFunc.Result>
             <DelegateOutArgument x:TypeArguments="x:String" Name="Result" />
           </ActivityFunc.Result>
-          <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_5" Name="OK" />
+          <c:Button ClientModel="{x:Null}" Priority="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_5" Name="OK" Style="btn-success" />
         </ActivityFunc>
       </c:UserTask.Wizard>
     </c:UserTask>
-    <sads:DebugSymbol.Symbol>d0NDOlxnaXRcVGVzdFdXRlxXZWJBcHBsaWNhdGlvbjFcUmVxdWVzdENhcmRcUmVxdWVzdENhcmRXb3JrRmxvdy54YW1sH18DqQEOAgEBYwWVARICAQqWAQWnARICAQJjywFj0wECASZjrwFjwQECASVjRWNVAgEkbAuSARICAQuWAbkBlgHKAQIBCZYBkwGWAa8BAgEIlgErlgE5AgEHmQELmQFPAgEFpAELpAFjAgEDbQ2MARoCAQ+NAQ2RARoCAQykAVykAWACAQRvEXUiAgEedw+LARoCARCPARGPAW0CAQ1yF3JsAgEgb31vhAECAR94EX4eAgEYfxGKARgCARGPAWKPAWoCAQ54U3hkAgEdexd7WwIBGYABE4QBIAIBFYUBE4kBIAIBEoIBF4IBcgIBFocBF4cBcgIBE4IBaIIBbwIBF4cBaIcBbwIBFA==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0NDOlxnaXRcVGVzdFdXRlxXZWJBcHBsaWNhdGlvbjFcUmVxdWVzdENhcmRcUmVxdWVzdENhcmRXb3JrRmxvdy54YW1sJ18DqQEOAgEBYwWVARICAQuWAQWnARICAQJjywFj0wECAS5jrwFjwQECAS1jRWNVAgEsbAuSARICAQyWAbkBlgHKAQIBCpYBkwGWAa8BAgEJlgErlgE5AgEImQELmQFPAgEGpAELpAGLAQIBA20NjAEaAgESjQENkQEaAgENpAF7pAGIAQIBBaQBcKQBdAIBBG8RdSICASR3D4sBGgIBE48BEY8BjQECAQ5vjgFvkgECAStvmQFvpgECASpyF3JsAgEmb31vhAECASV4EX4eAgEefxGKARgCARSPAXSPAXcCARGPAX6PAYoBAgEQjwFijwFqAgEPeFN4ZAIBI3sXe1sCAR+AAROEASACARmFAROJASACARWCAReCAZQBAgEahwEXhwGZAQIBFoIBeYIBfQIBHYIBhAGCAZEBAgEcggFoggFvAgEbhwGKAYcBlgECARiHAXyHAYMBAgEX</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
