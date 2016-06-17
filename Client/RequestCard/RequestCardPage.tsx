@@ -3,7 +3,10 @@ import { Router, Route, Link } from 'react-router'
 import * as $ from "jquery";
 import {browserHistory} from 'react-router';
 import {Search} from "./search";
-import {InputPersonInfo} from "./inputPersonInfo";
+import {PersonInfo} from "./personInfo";
+import {ChooseProduct} from "./chooseProduct";
+import {Approve} from "./approve";
+import {NewClient} from "./newClient";
 
 interface IUserTask {
     id: string;
@@ -53,11 +56,19 @@ export class RequestCardPage extends React.Component<{}, { userTask?: IUserTask,
     }
 
     wizard() {
+        var model = this.state.userTask.viewInputModel ? JSON.parse(this.state.userTask.viewInputModel) : null;
+
         switch (this.state.userTask.viewName) {
         case "Search":
-            return <Search onChange={(model)=>this.setState({viewModel:model})} />;
-        case "InputPersonInfo":
-            return <InputPersonInfo model={JSON.parse(this.state.userTask.viewInputModel) } />;
+                return <Search model={model} onChange={m=>this.setState({viewModel:m})} />;
+        case "PersonInfo":
+                return <PersonInfo model={model} />;
+        case "ChooseProduct":
+            return <ChooseProduct onChange={m => this.setState({ viewModel: m }) } />;
+        case "Approve":
+            return <Approve model={model} />;
+        case "NewClient":
+            return <NewClient onChange={m => this.setState({ viewModel: m }) } />;
 
         default: return <div>{this.state.userTask.viewName}</div>;
         }

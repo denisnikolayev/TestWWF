@@ -5,7 +5,7 @@ export interface ISearchModel {
     documentNumber?:string;
 }
 
-export class Search extends React.Component<{onChange:(model:ISearchModel)=>void}, ISearchModel> {
+export class Search extends React.Component<{onChange:(model:ISearchModel)=>void, model:{message?:string}}, ISearchModel> {
     constructor() {
         super();
 
@@ -13,13 +13,17 @@ export class Search extends React.Component<{onChange:(model:ISearchModel)=>void
     }
 
     onChange(model: ISearchModel) {
-        this.setState(model);
-        this.props.onChange(this.state);
+        this.setState(model, () => this.props.onChange(this.state));
     }
 
     render() {
+        var message = null;
+        if (this.props.model.message) {
+            message = <p className="bg-danger">{this.props.model.message}</p>;
+        }
+
         return <form>
-                    <h2>Поиск клиента</h2>
+            <h2 style={{ borderBottom: "1px solid black" }}>Поиск клиента</h2>
                     <div className="form-group">
                         <label>ИИН: </label>
                         <input style={{ width: "200px" }} maxLength={12} className="form-control" type="text" value={this.state.iin}
@@ -30,6 +34,8 @@ export class Search extends React.Component<{onChange:(model:ISearchModel)=>void
                         <input style={{ width: "300px" }} className="form-control" type="text" value={this.state.documentNumber}
                             onChange={(e: any) => this.onChange({ documentNumber: e.target.value }) } />
                     </div>
+
+                    {message}
                </form>;
 
     }

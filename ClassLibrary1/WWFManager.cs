@@ -48,7 +48,7 @@ namespace WebApplication1.WWF
 
             wf.Completed = e =>
             {
-             
+              
             };
             wf.Unloaded = (e) => wait.Set();
             wf.Aborted = (e) =>
@@ -102,7 +102,7 @@ namespace WebApplication1.WWF
 
             wf.Completed = e =>
             {
-                
+              
             };
             wf.Unloaded = (e) => wait.Set();
             wf.Aborted = (e) =>
@@ -125,6 +125,11 @@ namespace WebApplication1.WWF
                 if (innerException is System.ComponentModel.DataAnnotations.ValidationException)
                 {
                     throw innerException;
+                }
+
+                if (innerException.InnerException is System.ComponentModel.DataAnnotations.ValidationException)
+                {
+                    throw innerException.InnerException;
                 }
 
                 throw new Exception("Исключение в процессе (см. внутренее исключение)", innerException);
