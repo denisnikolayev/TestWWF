@@ -4,9 +4,10 @@ import * as $ from "jquery";
 import {browserHistory} from 'react-router';
 import {Search} from "./search";
 import {PersonInfo} from "./personInfo";
-import {ChooseProduct} from "./chooseProduct";
+import {ChooseProduct, IChooseProductModel} from "./chooseProduct";
 import {Approve} from "./approve";
 import {NewClient} from "./newClient";
+import {Revision, IFullCardInfo} from "./revision";
 
 interface IUserTask {
     id: string;
@@ -60,17 +61,20 @@ export class RequestCardPage extends React.Component<{}, { userTask?: IUserTask,
 
         switch (this.state.userTask.viewName) {
         case "Search":
-                return <Search model={model} onChange={m=>this.setState({viewModel:m})} />;
+            return <Search model={model} onChange={m => this.setState({ viewModel: m })} />;
         case "PersonInfo":
-                return <PersonInfo model={model} />;
+            return <PersonInfo model={model} />;
         case "ChooseProduct":
-            return <ChooseProduct onChange={m => this.setState({ viewModel: m }) } />;
+            return <ChooseProduct onChange={m => this.setState({ viewModel: m }) } model={model != null ? model.product : null } />;
         case "Approve":
             return <Approve model={model} />;
         case "NewClient":
-            return <NewClient onChange={m => this.setState({ viewModel: m }) } />;
+            return <NewClient onChange={m => this.setState({ viewModel: m }) } model={model} />;
+        case "Revision":
+            return <Revision onChange={m => this.setState({ viewModel: m }) } model={model} />;
 
-        default: return <div>{this.state.userTask.viewName}</div>;
+        default:
+            return <div>{this.state.userTask.viewName}</div>;
         }
     }
 

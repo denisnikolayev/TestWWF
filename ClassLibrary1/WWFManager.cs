@@ -143,7 +143,11 @@ namespace WebApplication1.WWF
             {
                 if (instanceStore == null)
                 {
-                    instanceStore = new SqlWorkflowInstanceStore("Data Source=.;Initial Catalog=DVDenis;Asynchronous Processing=True;User ID=Denis;Password=P@ssw0rd");
+                    //instanceStore = new SqlWorkflowInstanceStore("Data Source=.;Initial Catalog=TestWWF;Asynchronous Processing=True;User ID=Denis;Password=P@ssw0rd");
+
+                    //instanceStore = new SqlWorkflowInstanceStore("Data Source=.;Initial Catalog=TestWWF;Asynchronous Processing=True;Integrated Security=SSPI");
+
+                    instanceStore = new SqlWorkflowInstanceStore("Server=EPKZKARW0468\\SQLEXPRESS;Database=TestWWF;Trusted_Connection=True;");
 
                     InstanceHandle handle = instanceStore.CreateInstanceHandle();
                     InstanceView view = instanceStore.Execute(handle, new CreateWorkflowOwnerCommand(), TimeSpan.FromSeconds(30));

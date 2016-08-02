@@ -1,19 +1,21 @@
 ﻿import * as React from "react";
 import {ISearchModel} from "./search";
+import {IPersonInfo} from "./personInfo"
 
 export interface IChooseProductModel {
     curriency?: string;
     name?:string;
 }
 
-export class ChooseProduct extends React.Component<{ onChange: (model: IChooseProductModel) => void }, IChooseProductModel> {
-    constructor() {
-        super();
-        this.state = {};
+export class ChooseProduct extends React.Component<{ onChange: (model: IChooseProductModel) => void, model: IChooseProductModel }, IChooseProductModel> {
+    constructor(props) {
+        super(props);
+        this.state = props.model!= null ? { curriency: props.model.curriency, name: props.model.name } : { };
     }
     onChange(model: IChooseProductModel) {
         this.setState(model, () => this.props.onChange(this.state));
     }
+
 
     render() {
         return <form>

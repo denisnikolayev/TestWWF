@@ -2,11 +2,10 @@
 import {ISearchModel} from "./search";
 import {IPersonInfo} from "./personInfo"
 
-export class NewClient extends React.Component<{ onChange: (model: IPersonInfo) => void }, IPersonInfo> {
-    constructor() {
-        super();
-
-        this.state = {}; 
+export class NewClient extends React.Component<{ onChange: (model: IPersonInfo) => void, model: IPersonInfo }, IPersonInfo> {
+    constructor(props) {
+        super(props);
+        this.state = { iin: props.model.iin, documentNumber: props.model.documentNumber, fio: props.model.fio, birthDay: props.model.birthDay };
     }
 
     onChange(model: IPersonInfo) {
@@ -20,7 +19,7 @@ export class NewClient extends React.Component<{ onChange: (model: IPersonInfo) 
             <div className="form-group">
                 <label>ИИН: </label>
                 <input style={{ width: "200px" }} maxLength={12} className="form-control" type="text" value={this.state.iin}
-                    onChange={(e: any) => this.onChange({ iin: e.target.value }) } />
+                    onChange={(e: any) => this.onChange({ iin: e.target.value }) }/>
             </div>
 
             <div className="form-group">
@@ -33,7 +32,7 @@ export class NewClient extends React.Component<{ onChange: (model: IPersonInfo) 
             <div className="form-group">
                 <label>ФИО: </label>
 
-                <input style={{ width: "300px" }} maxLength={12} className="form-control" type="text" value={this.state.fio}
+                <input style={{ width: "300px" }} maxLength={36} className="form-control" type="text" value={this.state.fio}
                     onChange={(e: any) => this.onChange({ fio: e.target.value }) } />
             </div>
 
