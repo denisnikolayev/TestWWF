@@ -65,7 +65,7 @@ export class RequestCardPage extends React.Component<{}, { userTask?: IUserTask,
         case "PersonInfo":
             return <PersonInfo model={model} />;
         case "ChooseProduct":
-            return <ChooseProduct onChange={m => this.setState({ viewModel: m }) } model={model != null ? model.product : null } />;
+                return <ChooseProduct onChange={m => this.setState({ viewModel: m }) } model={model != null ? (model.product != null ? model.product : model) : null } />;
         case "Approve":
             return <Approve model={model} />;
         case "NewClient":

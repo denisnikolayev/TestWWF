@@ -10,7 +10,7 @@ export interface IChooseProductModel {
 export class ChooseProduct extends React.Component<{ onChange: (model: IChooseProductModel) => void, model: IChooseProductModel }, IChooseProductModel> {
     constructor(props) {
         super(props);
-        this.state = props.model!= null ? { curriency: props.model.curriency, name: props.model.name } : { };
+        this.state = props.model != null ? { curriency: props.model.curriency, name: props.model.name } : {};
     }
     onChange(model: IChooseProductModel) {
         this.setState(model, () => this.props.onChange(this.state));
