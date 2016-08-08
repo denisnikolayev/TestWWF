@@ -1,16 +1,17 @@
 ﻿import * as React from "react";
 import {ISearchModel} from "./search";
-import {IPersonInfo} from "./personInfo"
+import {IPersonInfo} from "./personInfo";
+import {CommentForStep, ICommentForStepModel} from "./commentForStep";
 
 export interface IChooseProductModel {
     curriency?: string;
     name?:string;
 }
 
-export class ChooseProduct extends React.Component<{ onChange: (model: IChooseProductModel) => void, model: IChooseProductModel }, IChooseProductModel> {
+export class ChooseProduct extends React.Component<{ onChange: (model: IChooseProductModel) => void, model: { product: IChooseProductModel, commentForStep: ICommentForStepModel} }, IChooseProductModel> {
     constructor(props) {
         super(props);
-        this.state = props.model != null ? { curriency: props.model.curriency, name: props.model.name } : {};
+        this.state = props.model.product != null ? { curriency: props.model.product.curriency, name: props.model.product.name } : {};
     }
     onChange(model: IChooseProductModel) {
         this.setState(model, () => this.props.onChange(this.state));
@@ -40,6 +41,9 @@ export class ChooseProduct extends React.Component<{ onChange: (model: IChoosePr
                     <option value="Visa Platinum">Visa Platinum</option>
                     <option value="Present Card">Present Card</option>
                 </select>
+            </div>
+            <div className={this.props.model.commentForStep != null ? 'form-group' : 'hidden'}>
+                <CommentForStep model={ this.props.model.commentForStep } />
             </div>
         </form>;
 

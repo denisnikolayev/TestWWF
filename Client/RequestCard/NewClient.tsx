@@ -1,11 +1,14 @@
 ﻿import * as React from "react";
 import {ISearchModel} from "./search";
 import {IPersonInfo} from "./personInfo"
+import {CommentForStep,ICommentForStepModel} from "./commentForStep";
 
-export class NewClient extends React.Component<{ onChange: (model: IPersonInfo) => void, model: IPersonInfo }, IPersonInfo> {
+export class NewClient extends React.Component<{ onChange: (model: IPersonInfo) => void, model: { person: IPersonInfo, commentForStep: ICommentForStepModel} }, IPersonInfo> {
     constructor(props) {
         super(props);
-        this.state = { iin: props.model.iin, documentNumber: props.model.documentNumber, fio: props.model.fio, birthDay: props.model.birthDay };
+        this.state = props.model.person != null ?
+            { iin: props.model.person.iin, documentNumber: props.model.person.documentNumber, fio: props.model.person.fio, birthDay: props.model.person.birthDay } :
+            {};
     }
 
     onChange(model: IPersonInfo) {
@@ -41,6 +44,9 @@ export class NewClient extends React.Component<{ onChange: (model: IPersonInfo) 
 
                 <input style={{ width: "150px" }} maxLength={12} className="form-control" type="date" value={this.state.birthDay}
                     onChange={(e: any) => this.onChange({ birthDay: e.target.value }) } />
+            </div>
+            <div className={this.props.model.commentForStep != null ? 'form-group' : 'hidden'}>
+                <CommentForStep model={ this.props.model.commentForStep } />
             </div>
         </form>;
 

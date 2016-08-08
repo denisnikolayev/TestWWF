@@ -9,5 +9,6 @@ namespace WebApplication1.RequestCard
     {
         public PersonInfo Person { get; set; }
         public ChooseProductModel Product { get; set; }
+        public CommentForStepModel CommentForStep { get; set; }
     }
 }

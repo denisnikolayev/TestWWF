@@ -35,6 +35,7 @@ namespace ClassLibrary1
 
         public int Priority { get; set; }
         public string Style { get; set; }
+        public string TypeButton { get; set; }
 
         [Required, InverseProperty("Buttons"), JsonIgnore]
         public UserTaskEntry Parent { get; set; }

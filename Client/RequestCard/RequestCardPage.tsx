@@ -8,6 +8,7 @@ import {ChooseProduct, IChooseProductModel} from "./chooseProduct";
 import {Approve} from "./approve";
 import {NewClient} from "./newClient";
 import {Revision, IFullCardInfo} from "./revision";
+import {ICommentForStepModel} from "./commentForStep";
 
 interface IUserTask {
     id: string;
@@ -16,7 +17,7 @@ interface IUserTask {
     viewName: string;
     viewInputModel: string;
     wwfId: string;
-    buttons: {id:string, name:string, style:string, priority:number}[];
+    buttons: { id: string, name: string, style: string, priority: number, typeButton: string}[];
 }
 
 export class RequestCardPage extends React.Component<{}, { userTask?: IUserTask, viewModel?:any }> {
@@ -43,6 +44,12 @@ export class RequestCardPage extends React.Component<{}, { userTask?: IUserTask,
 
     onClick(action: string) {
         var {userTask, viewModel} = this.state;
+        for (var i = 0; i < userTask.buttons.length; i++) {
+            if (userTask.buttons[i].id === action && userTask.buttons[i].typeButton === "comment" ) {
+                var commenttext = prompt("Введите комментарий.", "");
+                viewModel.comment = commenttext ;
+            }
+        }
 
         $.post(SERVER_URL + "/api/wwf/click", { taskId: userTask.id, buttonId: action, model: JSON.stringify(viewModel)})
             .then((data: IUserTask) => {
@@ -65,7 +72,7 @@ export class RequestCardPage extends React.Component<{}, { userTask?: IUserTask,
         case "PersonInfo":
             return <PersonInfo model={model} />;
         case "ChooseProduct":
-                return <ChooseProduct onChange={m => this.setState({ viewModel: m }) } model={model != null ? (model.product != null ? model.product : model) : null } />;
+                return <ChooseProduct onChange={m => this.setState({ viewModel: m }) } model={model} />;
         case "Approve":
             return <Approve model={model} />;
         case "NewClient":

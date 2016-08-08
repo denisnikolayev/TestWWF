@@ -74,6 +74,10 @@
   <ItemGroup>
     <Compile Include="Button.cs" />
     <Compile Include="EmptyModel.cs" />
+    <Compile Include="CommentButton.cs" />
+    <Compile Include="CommentButtonDesigner.xaml.cs">
+      <DependentUpon>CommentButtonDesigner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserTask.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="NextView.cs" />
@@ -89,6 +93,10 @@
     <Compile Include="WWFManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CommentButtonDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ResultButtonDesigner.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

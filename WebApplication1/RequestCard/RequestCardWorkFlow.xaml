@@ -394,7 +394,13 @@
                                 </PickBranch>
                                 <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_10">
                                   <PickBranch.Trigger>
-                                    <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_14" Name="На доработку" Priority="5" Style="btn-warning" />
+                                    <c:CommentButton x:TypeArguments="local:CommentForStepModel" ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="CommentButton`1_4" Name="На доработку" Priority="5" Style="btn-warning">
+                                      <c:CommentButton.CommentForStep>
+                                        <OutArgument x:TypeArguments="local:CommentForStepModel">
+                                          <mca:CSharpReference x:TypeArguments="local:CommentForStepModel">CommentForStep</mca:CSharpReference>
+                                        </OutArgument>
+                                      </c:CommentButton.CommentForStep>
+                                    </c:CommentButton>
                                   </PickBranch.Trigger>
                                   <Assign sap2010:WorkflowViewState.IdRef="Assign_4">
                                     <Assign.To>
@@ -494,7 +500,7 @@
                           <c:UserTask Result="{x:Null}" Caption="Доработка" DisplayName="Задача пользователю" sap2010:WorkflowViewState.IdRef="UserTask_6" QueueName="Менеджер/На доработке" ViewName="NewClient">
                             <c:UserTask.ViewInputModel>
                               <InArgument x:TypeArguments="x:Object">
-                                <mca:CSharpValue x:TypeArguments="x:Object">Person</mca:CSharpValue>
+                                <mca:CSharpValue x:TypeArguments="x:Object">new FullCardInfoViewModel { Person = Person, CommentForStep = CommentForStep }</mca:CSharpValue>
                               </InArgument>
                             </c:UserTask.ViewInputModel>
                             <c:UserTask.Wizard>
@@ -515,7 +521,7 @@
                                               <c:NextView DisplayName="Редактировать клиента" sap2010:WorkflowViewState.IdRef="NextView_11" ViewName="NewClient">
                                                 <c:NextView.ViewInputModel>
                                                   <InArgument x:TypeArguments="x:Object">
-                                                    <mca:CSharpValue x:TypeArguments="x:Object">Person</mca:CSharpValue>
+                                                    <mca:CSharpValue x:TypeArguments="x:Object">new FullCardInfoViewModel { Person = Person, CommentForStep = CommentForStep }</mca:CSharpValue>
                                                   </InArgument>
                                                 </c:NextView.ViewInputModel>
                                               </c:NextView>
@@ -537,7 +543,7 @@
                                                       <c:NextView DisplayName="Подбор продукта" sap2010:WorkflowViewState.IdRef="NextView_12" ViewName="ChooseProduct">
                                                         <c:NextView.ViewInputModel>
                                                           <InArgument x:TypeArguments="x:Object">
-                                                            <mca:CSharpValue x:TypeArguments="x:Object">Product</mca:CSharpValue>
+                                                            <mca:CSharpValue x:TypeArguments="x:Object">new FullCardInfoViewModel { Product = Product, CommentForStep = CommentForStep }</mca:CSharpValue>
                                                           </InArgument>
                                                         </c:NextView.ViewInputModel>
                                                       </c:NextView>
@@ -650,8 +656,9 @@
     <StateMachine.Variables>
       <Variable x:TypeArguments="local:PersonInfo" Name="Person" />
       <Variable x:TypeArguments="local:ChooseProductModel" Name="Product" />
+      <Variable x:TypeArguments="local:CommentForStepModel" Name="CommentForStep" />
     </StateMachine.Variables>
-    <sads:DebugSymbol.Symbol>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</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>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</sads:DebugSymbol.Symbol>
   </StateMachine>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -764,7 +771,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_3" sap:VirtualizedContainerService.HintSize="222,81">
+      <sap2010:ViewStateData Id="State_3" sap:VirtualizedContainerService.HintSize="326,499">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">369,349.5</av:Point>
@@ -826,7 +833,7 @@
       <sap2010:ViewStateData Id="Button_13" sap:VirtualizedContainerService.HintSize="261,72" />
       <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="242,62" />
       <sap2010:ViewStateData Id="PickBranch_9" sap:VirtualizedContainerService.HintSize="291,332" />
-      <sap2010:ViewStateData Id="Button_14" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="CommentButton`1_4" sap:VirtualizedContainerService.HintSize="261,72" />
       <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="242,62" />
       <sap2010:ViewStateData Id="PickBranch_10" sap:VirtualizedContainerService.HintSize="291,332" />
       <sap2010:ViewStateData Id="Button_15" sap:VirtualizedContainerService.HintSize="261,72" />
@@ -918,7 +925,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_15" sap:VirtualizedContainerService.HintSize="308,148">
+      <sap2010:ViewStateData Id="State_15" sap:VirtualizedContainerService.HintSize="326,472">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">146,306</av:Point>
@@ -949,7 +956,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="StateMachine_4" sap:VirtualizedContainerService.HintSize="200,51">
+      <sap2010:ViewStateData Id="StateMachine_4" sap:VirtualizedContainerService.HintSize="614,790">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -985,7 +992,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_7" sap:VirtualizedContainerService.HintSize="173,85">
+      <sap2010:ViewStateData Id="State_7" sap:VirtualizedContainerService.HintSize="757,839">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">723.5,347.5</av:Point>
