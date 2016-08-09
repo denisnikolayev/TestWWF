@@ -13,6 +13,11 @@ export class ChooseProduct extends React.Component<{ onChange: (model: IChoosePr
         super(props);
         this.state = props.model.product != null ? { curriency: props.model.product.curriency, name: props.model.product.name } : {};
     }
+
+    componentDidMount() {
+        this.onChange(this.state);
+    }
+
     onChange(model: IChooseProductModel) {
         this.setState(model, () => this.props.onChange(this.state));
     }

@@ -11,6 +11,10 @@ export class NewClient extends React.Component<{ onChange: (model: IPersonInfo) 
             {};
     }
 
+    componentDidMount() {
+        this.onChange(this.state);
+    }
+
     onChange(model: IPersonInfo) {
         this.setState(model, () => this.props.onChange(this.state));
     }
