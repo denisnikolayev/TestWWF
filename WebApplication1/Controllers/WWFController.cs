@@ -32,6 +32,18 @@ namespace WebApplication1.Controllers
         public int Number { get; set; }
     }
 
+    public class TaskCanceledInfo
+    {
+        public string Name { get; set; }
+        public IEnumerable<InfoCanceled> InfoCanceled { get; set; }
+    }
+
+    public class InfoCanceled
+    {
+        public string Caption { get; set; }
+        public string CommentText { get; set; }
+    }
+
     [RoutePrefix("api/wwf")]
     public class WWFController : ApiController
     {
@@ -80,6 +92,20 @@ namespace WebApplication1.Controllers
                     {
                         Name = g.Key,
                         Tasks = g.Select(t => new TaskInfo() {Caption = t.Caption, Id = t.Id, Number = t.Number})
+                    }).ToArray();
+            }
+        }
+
+        [HttpGet, Route("taskCanceled")]
+        public TaskCanceledInfo[] GetTaskCanceled()
+        {
+            using (var db = new Db())
+            {
+                return db.TaskCanceledWithComment.GroupBy(u => u.QueueName)
+                    .Select(g => new TaskCanceledInfo()
+                    {
+                        Name = g.Key,
+                        InfoCanceled = g.Select(t => new InfoCanceled() { Caption = t.Caption, CommentText = t.TextComment})
                     }).ToArray();
             }
         }

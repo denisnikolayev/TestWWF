@@ -20,7 +20,6 @@ namespace ClassLibrary1
         public OutArgument<T> ClientModel { get; set; }
         public OutArgument<T> CommentForStep { get; set; }
 
-        private Variable<string> TypeButton = new Variable<string>();
         private Variable<Guid> buttonId = new Variable<Guid>();
 
         protected override bool CanInduceIdle => true;

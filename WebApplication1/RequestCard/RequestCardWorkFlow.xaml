@@ -328,7 +328,15 @@
                   </PickBranch>
                   <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_8">
                     <PickBranch.Trigger>
-                      <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_11" Name="Отменить" Priority="0" Style="btn-danger" />
+                      <Sequence sap2010:WorkflowViewState.IdRef="Sequence_6">
+                        <c:CommentButton x:TypeArguments="local:CommentForStepModel" ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="CommentButton`1_5" Name="Отменить" Priority="0" Style="btn-danger">
+                          <c:CommentButton.CommentForStep>
+                            <OutArgument x:TypeArguments="local:CommentForStepModel">
+                              <mca:CSharpReference x:TypeArguments="local:CommentForStepModel">CommentForStep</mca:CSharpReference>
+                            </OutArgument>
+                          </c:CommentButton.CommentForStep>
+                        </c:CommentButton>
+                      </Sequence>
                     </PickBranch.Trigger>
                     <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
                       <Assign.To>
@@ -415,7 +423,13 @@
                                 </PickBranch>
                                 <PickBranch sap2010:WorkflowViewState.IdRef="PickBranch_11">
                                   <PickBranch.Trigger>
-                                    <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_15" Name="Отклонить" Priority="0" Style="btn-danger" />
+                                    <c:CommentButton x:TypeArguments="local:CommentForStepModel" ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="CommentButton`1_6" Name="Отклонить" Priority="0" Style="btn-danger">
+                                      <c:CommentButton.CommentForStep>
+                                        <OutArgument x:TypeArguments="local:CommentForStepModel">
+                                          <mca:CSharpReference x:TypeArguments="local:CommentForStepModel">CommentForStep</mca:CSharpReference>
+                                        </OutArgument>
+                                      </c:CommentButton.CommentForStep>
+                                    </c:CommentButton>
                                   </PickBranch.Trigger>
                                   <Assign sap2010:WorkflowViewState.IdRef="Assign_5">
                                     <Assign.To>
@@ -482,20 +496,12 @@
                       <State x:Name="__ReferenceID13" DisplayName="Завершено" sap2010:WorkflowViewState.IdRef="State_5" IsFinal="True" />
                     </Transition.To>
                   </Transition>
-                  <Transition DisplayName="Отклонить" sap2010:WorkflowViewState.IdRef="Transition_9">
-                    <Transition.Condition>
-                      <mca:CSharpValue x:TypeArguments="x:Boolean">Decision=="Отклонить"</mca:CSharpValue>
-                    </Transition.Condition>
-                    <Transition.To>
-                      <State x:Name="__ReferenceID10" DisplayName="Отменить" sap2010:WorkflowViewState.IdRef="State_6" IsFinal="True" />
-                    </Transition.To>
-                  </Transition>
                   <Transition DisplayName="На доработку" sap2010:WorkflowViewState.IdRef="Transition_12">
                     <Transition.Condition>
                       <mca:CSharpValue x:TypeArguments="x:Boolean">Decision=="На доработку"</mca:CSharpValue>
                     </Transition.Condition>
                     <Transition.To>
-                      <State x:Name="__ReferenceID11" DisplayName="Доработка" sap2010:WorkflowViewState.IdRef="State_7">
+                      <State x:Name="__ReferenceID10" DisplayName="Доработка" sap2010:WorkflowViewState.IdRef="State_7">
                         <State.Entry>
                           <c:UserTask Result="{x:Null}" Caption="Доработка" DisplayName="Задача пользователю" sap2010:WorkflowViewState.IdRef="UserTask_6" QueueName="Менеджер/На доработке" ViewName="NewClient">
                             <c:UserTask.ViewInputModel>
@@ -588,7 +594,13 @@
                                   </PickBranch>
                                   <PickBranch DisplayName="Branch2" sap2010:WorkflowViewState.IdRef="PickBranch_15">
                                     <PickBranch.Trigger>
-                                      <c:Button ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="Button_18" Name="Отменить" Priority="0" Style="btn-danger" />
+                                      <c:CommentButton x:TypeArguments="local:CommentForStepModel" ClientModel="{x:Null}" sap2010:WorkflowViewState.IdRef="CommentButton`1_7" Name="Отменить" Priority="0" Style="btn-danger">
+                                        <c:CommentButton.CommentForStep>
+                                          <OutArgument x:TypeArguments="local:CommentForStepModel">
+                                            <mca:CSharpReference x:TypeArguments="local:CommentForStepModel">CommentForStep</mca:CSharpReference>
+                                          </OutArgument>
+                                        </c:CommentButton.CommentForStep>
+                                      </c:CommentButton>
                                     </PickBranch.Trigger>
                                     <Assign sap2010:WorkflowViewState.IdRef="Assign_8">
                                       <Assign.To>
@@ -612,10 +624,26 @@
                               <mca:CSharpValue x:TypeArguments="x:Boolean">Decision=="Отправить"</mca:CSharpValue>
                             </Transition.Condition>
                           </Transition>
-                          <Transition DisplayName="Отменить" sap2010:WorkflowViewState.IdRef="Transition_11" To="{x:Reference __ReferenceID10}">
+                          <Transition DisplayName="Отменить" sap2010:WorkflowViewState.IdRef="Transition_11">
                             <Transition.Condition>
                               <mca:CSharpValue x:TypeArguments="x:Boolean">Decision=="Отменить"</mca:CSharpValue>
                             </Transition.Condition>
+                            <Transition.To>
+                              <State x:Name="__ReferenceID11" DisplayName="Отменить" sap2010:WorkflowViewState.IdRef="State_6" IsFinal="True">
+                                <State.Entry>
+                                  <c:TaskCanceledWithComment Caption="Задание отменено" DisplayName="Завершение" sap2010:WorkflowViewState.IdRef="TaskCanceledWithComment_1" QueueName="Отмененные задания">
+                                    <c:TaskCanceledWithComment.InputComment>
+                                      <InArgument x:TypeArguments="x:String">
+                                        <mca:CSharpValue x:TypeArguments="x:String">CommentForStep.Comment</mca:CSharpValue>
+                                      </InArgument>
+                                    </c:TaskCanceledWithComment.InputComment>
+                                  </c:TaskCanceledWithComment>
+                                </State.Entry>
+                                <State.Variables>
+                                  <Variable x:TypeArguments="x:String" Name="Decision" />
+                                </State.Variables>
+                              </State>
+                            </Transition.To>
                           </Transition>
                         </State.Transitions>
                         <State.Variables>
@@ -625,10 +653,31 @@
                       </State>
                     </Transition.To>
                   </Transition>
-                  <Transition DisplayName="Отзыв" sap2010:WorkflowViewState.IdRef="Transition_16" To="{x:Reference __ReferenceID11}">
+                  <Transition DisplayName="Отзыв" sap2010:WorkflowViewState.IdRef="Transition_16" To="{x:Reference __ReferenceID10}">
                     <Transition.Condition>
                       <mca:CSharpValue x:TypeArguments="x:Boolean">Decision== "Отзыв"</mca:CSharpValue>
                     </Transition.Condition>
+                  </Transition>
+                  <Transition DisplayName="Отклонить" sap2010:WorkflowViewState.IdRef="Transition_9">
+                    <Transition.Condition>
+                      <mca:CSharpValue x:TypeArguments="x:Boolean">Decision=="Отклонить"</mca:CSharpValue>
+                    </Transition.Condition>
+                    <Transition.To>
+                      <State x:Name="__ReferenceID14" DisplayName="Отклонить" sap2010:WorkflowViewState.IdRef="State_17" IsFinal="True">
+                        <State.Entry>
+                          <c:TaskCanceledWithComment Caption="Задание отклонено" DisplayName="Отклоненные" sap2010:WorkflowViewState.IdRef="TaskCanceledWithComment_2" QueueName="Отмененные задания">
+                            <c:TaskCanceledWithComment.InputComment>
+                              <InArgument x:TypeArguments="x:String">
+                                <mca:CSharpValue x:TypeArguments="x:String">CommentForStep.Comment</mca:CSharpValue>
+                              </InArgument>
+                            </c:TaskCanceledWithComment.InputComment>
+                          </c:TaskCanceledWithComment>
+                        </State.Entry>
+                        <State.Variables>
+                          <Variable x:TypeArguments="x:String" Name="Decision" />
+                        </State.Variables>
+                      </State>
+                    </Transition.To>
                   </Transition>
                 </State.Transitions>
                 <State.Variables>
@@ -637,7 +686,7 @@
               </State>
             </Transition.To>
           </Transition>
-          <Transition DisplayName="Отменить" sap2010:WorkflowViewState.IdRef="Transition_14" To="{x:Reference __ReferenceID10}">
+          <Transition DisplayName="Отменить" sap2010:WorkflowViewState.IdRef="Transition_14" To="{x:Reference __ReferenceID11}">
             <Transition.Condition>
               <mca:CSharpValue x:TypeArguments="x:Boolean">Decision=="Отменить"</mca:CSharpValue>
             </Transition.Condition>
@@ -651,14 +700,15 @@
     <x:Reference>__ReferenceID12</x:Reference>
     <x:Reference>__ReferenceID9</x:Reference>
     <x:Reference>__ReferenceID13</x:Reference>
-    <x:Reference>__ReferenceID10</x:Reference>
     <x:Reference>__ReferenceID11</x:Reference>
+    <x:Reference>__ReferenceID10</x:Reference>
+    <x:Reference>__ReferenceID14</x:Reference>
     <StateMachine.Variables>
       <Variable x:TypeArguments="local:PersonInfo" Name="Person" />
       <Variable x:TypeArguments="local:ChooseProductModel" Name="Product" />
       <Variable x:TypeArguments="local:CommentForStepModel" Name="CommentForStep" />
     </StateMachine.Variables>
-    <sads:DebugSymbol.Symbol>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</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1NEOlxQcm9qZWN0c1xIYWx5a19CYW5rXFRlc3RXV0ZcV2ViQXBwbGljYXRpb24xXFJlcXVlc3RDYXJkXFJlcXVlc3RDYXJkV29ya0Zsb3cueGFtbMEBYAPIBRICAQFiB7oFDwMB/wHrAg+uBRcDAYcB8AMX8AOKAQMBhQH4BB+FBScCAXv4AxeNBR8CAQyaBRenBR8CAQJkC+MCGAMBjALoAg/oAmMDAYYCswUPswViAwGBAu0CE+gDGgMBngHtAxftA20DAZgB9QMX9QNuAwGTAZIFF5IFaAMBjgGXBReXBWsDAYkB+gQjgAU/AgF9+gMb6wQoAgEb8AQf8ARzAgEU9QQf9QRyAgEOnAUbogU3AgEEZMMBZMsBAwH7A2SnAWS5AQMB+gNkOWRNAwH5A2cRZ18DAfQDchHgAhgDAY0C7gIVwgMiAwG4AcMDFecDIgMBnwH9BCn9BH0DAYAB+gS4AfoEzAECAX/6BEb6BFgCAX76A8cB+gPSAQIBevoDpgH6A70BAgF5+gNB+gNMAgF4/QMh/QOtAQIBcogEIegEKAIBHJ8FIZ8FdQIBB5wFsgGcBcYBAgEGnAU+nAVRAgEFcxPIAiADAaQCyQIT3wIgAwGOAvACGcADJgMBuQHFAxnbAyYDAacB3QMX5gMgAwGgAYkEI9IEMAIBNNMEI+cEMAIBHXUXvAImAwGuAr4CFccCHgMBpQLLAhfTAiIDAZgC1QIV3gIeAwGPAvACtgHwAr8BAwH+AfACkAHwAqwBAwH9AfMCH/MCeQMB+AH4Ah/4ApwBAwHzAYMDH70DJgMBugHFA7QBxQO9AQMBtwHFA5ABxQOqAQMBtgHIAx/IA3IDAbEBzQMfzQOdAQMBrAHYAx/YA58BAwGoAeQDQuQDRwMBpgHgAx3gA2sDAaEBiwQnxgQ2AgE/yAQl0QQuAgE11QQn2wQ5AgEo3QQl5gQuAgEeuAIfuAJOAwHzA3cbrgIjAwHpAsEBI/EBKwMB1QL5ASOVAisDAcEC0QEr5QEzAwGxAuEBM+EBpgEDAa8CxQJAxQJJAwGtAsECG8ECZwMBpgLMAhnSAisDAZkC3AJA3AJIAwGXAtgCG9gCZwMBkAKEAyGSAy4DAeUBkwMhpwMuAwHQAagDIbwDLgMBuwHYA4UB2AOJAQMBqwHYA5AB2AOcAQMBqgHYA3HYA3sDAakBjQQrwQQzAgFaowQzvQQ7AgFCuQQ7uQSuAQIBQM8EUM8EWQIBPssEK8sEeQIBNtUEyAHVBMsBAgEz1QTSAdUE3gECATLYBC3YBJIBAgEq1QS0AdUEvgECASnkBFDkBFgCASfgBCvgBHkCAR95H38sAwHnA4IBH40BKAMB2wOSASO7AS4DAZUDvgEjvgGGAQMBiwP2ASP2AYYBAwGBA6YCI6YCbQMB9wKaAiOjAiwDAesCwwEnyQE0AwHfAs4BK84BtAEDAdsC6gEr6gGoAQMB1wL7ASf7AawBAwHTAoACK4ACsgEDAc8CiAIrjgI8AwHDAtMBL9MBuwEDAb8C2AEz3gFEAwGzAswCugHMAr0BAwGjAswCxAHMAtABAwGiAs8CH88ChAEDAZsCzAKmAcwCsAEDAZoChgMlhgOpAQMB7wGIAyORAywDAeYBlQMlmwM3AwHaAZ0DI6YDLAMB0QGqAyWwAzcDAcUBsgMjuwMsAwG8AY8EL5UEPAIBaJoEM6AERAIBXKUEN6sERAIBULAEO7YETAIBRHl1eX0DAfIDfCV8cQMB6AOKASWKAVQDAeYDhQElhQFyAwHcA5MBJZkBNgMBzQOaASWlATYDAbcDpgElugEqAwGWA6ECTqECdAMB9gKdAimdAnYDAewCwwGXAcMBowEDAegCxgEtxgFxAwHgAs4BmQHOAZ0BAwHeAs4BpAHOAbEBAwHdAs4BfM4BjwEDAdwC6gGOAeoBkQEDAdoC6gGYAeoBpQEDAdkC6gF96gGEAQMB2AL7AZ4B+wGpAQMB1AKAApgBgAKbAQMB0gKAAqIBgAKvAQMB0QKAAn2AAo4BAwHQAogCpwGIAqsBAwHOAogCsgGIAr8BAwHNAosCMYsChQEDAcUCiAKWAYgCnQEDAcQC0wGpAdMBuAEDAcAC2AG7AdgBvwEDAb4C2AHGAdgB0wEDAb0C2wE52wGWAQMBtQLYAaYB2AGxAQMBtAKGA44BhgOSAQMB8gGGA5kBhgOmAQMB8QGGA3eGA4QBAwHwAY8DTo8DWQMB7gGLAymLA3cDAecBlQPKAZUDzQEDAeQBlQPUAZUD4QEDAeMBmAMrmAOQAQMB3AGVA7IBlQPAAQMB2wGkA06kA1oDAdkBoAMpoAN3AwHSAaoDxwGqA8oBAwHPAaoD0QGqA90BAwHOAa0DK60DkAEDAccBqgOyAaoDvQEDAcYBuQNOuQNXAwHEAbUDKbUDdwMBvQGPBJYBjwShAQIBcZIENZIEwQECAWmaBK8BmgSzAQIBZ5oEugGaBMcBAgFmnQQ5nQSNAQIBXpoEngGaBKUBAgFdpQSYAaUEpwECAVmoBD2oBMsBAgFRsATDAbAExwECAU+wBM4BsATbAQIBTrMEQbMEngECAUawBK4BsAS5AQIBRZMBtwGTAbsBAwHaA5MBwgGTAc8BAwHZA5YBK5YBgAEDAc8DkwGmAZMBrQEDAc4DmgGsAZoBtgEDAcwDnQErnQGFAQMBwgOiASuiAXwDAbgDqQErqQF0AwGXA60BKbgBOgMBoQOtAbcBrQG/AQMBtgOwAS+wAYUBAwGsA7UBL7UBgwEDAaID</sads:DebugSymbol.Symbol>
   </StateMachine>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -812,7 +862,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="StateMachine_1" sap:VirtualizedContainerService.HintSize="616,800">
+      <sap2010:ViewStateData Id="StateMachine_1" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -824,19 +874,26 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="PickBranch_7" sap:VirtualizedContainerService.HintSize="272,332" />
-      <sap2010:ViewStateData Id="Button_11" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="PickBranch_7" sap:VirtualizedContainerService.HintSize="272,456" />
+      <sap2010:ViewStateData Id="CommentButton`1_5" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="283,196">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="PickBranch_8" sap:VirtualizedContainerService.HintSize="291,332" />
-      <sap2010:ViewStateData Id="Pick_4" sap:VirtualizedContainerService.HintSize="717,378" />
-      <sap2010:ViewStateData Id="UserTask_3" sap:VirtualizedContainerService.HintSize="731,450" />
+      <sap2010:ViewStateData Id="PickBranch_8" sap:VirtualizedContainerService.HintSize="313,456" />
+      <sap2010:ViewStateData Id="Pick_4" sap:VirtualizedContainerService.HintSize="739,502" />
+      <sap2010:ViewStateData Id="UserTask_3" sap:VirtualizedContainerService.HintSize="753,574" />
       <sap2010:ViewStateData Id="Button_13" sap:VirtualizedContainerService.HintSize="261,72" />
       <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="242,62" />
       <sap2010:ViewStateData Id="PickBranch_9" sap:VirtualizedContainerService.HintSize="291,332" />
       <sap2010:ViewStateData Id="CommentButton`1_4" sap:VirtualizedContainerService.HintSize="261,72" />
       <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="242,62" />
       <sap2010:ViewStateData Id="PickBranch_10" sap:VirtualizedContainerService.HintSize="291,332" />
-      <sap2010:ViewStateData Id="Button_15" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="CommentButton`1_6" sap:VirtualizedContainerService.HintSize="261,72" />
       <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="242,62" />
       <sap2010:ViewStateData Id="PickBranch_11" sap:VirtualizedContainerService.HintSize="291,332" />
       <sap2010:ViewStateData Id="Pick_5" sap:VirtualizedContainerService.HintSize="1067,378">
@@ -878,26 +935,6 @@
             <av:PointCollection x:Key="ConnectorLocation">260,426 260,544.5</av:PointCollection>
             <x:Int32 x:Key="SrcConnectionPointIndex">39</x:Int32>
             <x:Int32 x:Key="DestConnectionPointIndex">38</x:Int32>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_6" sap:VirtualizedContainerService.HintSize="206,65">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">547,57.5</av:Point>
-            <av:Size x:Key="ShapeSize">206,65</av:Size>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-            <x:Double x:Key="StateContainerWidth">192</x:Double>
-            <x:Double x:Key="StateContainerHeight">29.079999999999984</x:Double>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Transition_9" sap:VirtualizedContainerService.HintSize="430,509">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:PointCollection x:Key="ConnectorLocation">334.4,334 334.4,304 619.1,304 619.1,122.5</av:PointCollection>
-            <x:Int32 x:Key="SrcConnectionPointIndex">62</x:Int32>
-            <x:Int32 x:Key="DestConnectionPointIndex">27</x:Int32>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -956,7 +993,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="StateMachine_4" sap:VirtualizedContainerService.HintSize="614,790">
+      <sap2010:ViewStateData Id="StateMachine_4" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -969,7 +1006,7 @@
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Assign_15" sap:VirtualizedContainerService.HintSize="242,62" />
       <sap2010:ViewStateData Id="PickBranch_14" sap:VirtualizedContainerService.HintSize="272,332" />
-      <sap2010:ViewStateData Id="Button_18" sap:VirtualizedContainerService.HintSize="261,72" />
+      <sap2010:ViewStateData Id="CommentButton`1_7" sap:VirtualizedContainerService.HintSize="261,72" />
       <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="242,62" />
       <sap2010:ViewStateData Id="PickBranch_15" sap:VirtualizedContainerService.HintSize="291,332" />
       <sap2010:ViewStateData Id="Pick_7" sap:VirtualizedContainerService.HintSize="717,378" />
@@ -983,6 +1020,18 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TaskCanceledWithComment_1" sap:VirtualizedContainerService.HintSize="247,72" />
+      <sap2010:ViewStateData Id="State_6" sap:VirtualizedContainerService.HintSize="326,223">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">547,57.5</av:Point>
+            <av:Size x:Key="ShapeSize">206,65</av:Size>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Double x:Key="StateContainerWidth">192</x:Double>
+            <x:Double x:Key="StateContainerHeight">29.079999999999984</x:Double>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Transition_11" sap:VirtualizedContainerService.HintSize="430,507">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -992,7 +1041,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_7" sap:VirtualizedContainerService.HintSize="757,839">
+      <sap2010:ViewStateData Id="State_7" sap:VirtualizedContainerService.HintSize="173,85">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">723.5,347.5</av:Point>
@@ -1018,6 +1067,27 @@
             <av:PointCollection x:Key="ConnectorLocation">384,412.2 414,412.2 414,424 723.5,424</av:PointCollection>
             <x:Int32 x:Key="SrcConnectionPointIndex">64</x:Int32>
             <x:Int32 x:Key="DestConnectionPointIndex">69</x:Int32>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TaskCanceledWithComment_2" sap:VirtualizedContainerService.HintSize="247,72" />
+      <sap2010:ViewStateData Id="State_17" sap:VirtualizedContainerService.HintSize="206,65">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">397,147.5</av:Point>
+            <av:Size x:Key="ShapeSize">206,65</av:Size>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Double x:Key="StateContainerWidth">192</x:Double>
+            <x:Double x:Key="StateContainerHeight">29.079999999999984</x:Double>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Transition_9" sap:VirtualizedContainerService.HintSize="430,507">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:PointCollection x:Key="ConnectorLocation">334.4,334 334.4,304 510.3,304 510.3,212.5</av:PointCollection>
+            <x:Int32 x:Key="SrcConnectionPointIndex">62</x:Int32>
+            <x:Int32 x:Key="DestConnectionPointIndex">43</x:Int32>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>

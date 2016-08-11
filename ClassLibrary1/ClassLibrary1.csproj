@@ -78,6 +78,7 @@
     <Compile Include="CommentButtonDesigner.xaml.cs">
       <DependentUpon>CommentButtonDesigner.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TaskCanceledWithComment.cs" />
     <Compile Include="UserTask.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="NextView.cs" />
@@ -86,6 +87,9 @@
       <DependentUpon>ResultButtonDesigner.xaml</DependentUpon>
     </Compile>
     <Compile Include="QueryService.cs" />
+    <Compile Include="TaskCanceledWithCommentDesign.xaml.cs">
+      <DependentUpon>TaskCanceledWithCommentDesign.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserTaskDesign.xaml.cs">
       <DependentUpon>UserTaskDesign.xaml</DependentUpon>
     </Compile>
@@ -98,6 +102,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ResultButtonDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TaskCanceledWithCommentDesign.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

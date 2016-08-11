@@ -41,10 +41,21 @@ namespace ClassLibrary1
         public UserTaskEntry Parent { get; set; }
     }
 
+    public class TaskCanceledWithCommentEntry
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public Guid Id { get; set; }
+
+        public string TextComment { get; set; }
+        public string Caption { get; set; }
+        public string QueueName { get; set; }
+        public HashSet<ButtonEntry> Buttons { get; set; } = new HashSet<ButtonEntry>();
+    }
 
     public class Db : DbContext
     {
         public DbSet<UserTaskEntry> UserTasks { get; set; }
         public DbSet<ButtonEntry> Buttons { get; set; }
+        public DbSet<TaskCanceledWithCommentEntry> TaskCanceledWithComment { get; set; }
     }
 }
