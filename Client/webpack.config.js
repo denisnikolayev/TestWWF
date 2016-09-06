@@ -10,6 +10,15 @@ var proxyServerUrl = process.env.NODE_ENV === "development" ? "http://localhost:
 
 console.log(process.env.NODE_ENV);
 console.log("Proxy server url " + proxyServerUrl);
+console.log("Node: " + path.join(__dirname, "node_modules"));
+
+var babelPresets = [
+       require('babel-preset-es2015'),
+       require('babel-preset-stage-0')
+];
+var babelPlugins = [
+    require('babel-plugin-transform-class-properties')
+];
 
 module.exports = {
     devtool: process.env.NODE_ENV == "development" || process.env.NODE_ENV === "developmentWithoutServer" ? "inline-source-map" : "",
@@ -30,14 +39,23 @@ module.exports = {
         publicPath: "/"
     },
     resolve: {
-        extensions: [".tsx", ".js", "", ".ts", '.scss', '.png', '.jpg', '.css', '.eot', '.woff', '.ttf', '.woff2', '.svg']
+        extensions: [".tsx", ".js", "", ".ts", '.scss', '.png', '.jpg', '.css', '.eot', '.woff', '.ttf', '.woff2', '.svg'],
+        root: path.join(__dirname, "node_modules")
+    },
+    resolveLoader: {
+        root: path.join(__dirname, "node_modules")
+    },
+    babel: {
+        presets: babelPresets,
+        plugins: babelPlugins,
+        cacheDirectory: true
     },
     module: {
         loaders: [
         {
             test: /(\.tsx|\.ts)$/,
-            loaders: process.env.NODE_ENV === "development" || process.env.NODE_ENV === "developmentWithoutServer" ? ["react-hot", "babel-loader?presets[]=es2015&presets[]=stage-0", "ts-loader"] : ["babel-loader?presets[]=es2015&presets[]=stage-0", "ts-loader"],
-            include: __dirname
+            loaders: process.env.NODE_ENV === "development" || process.env.NODE_ENV === "developmentWithoutServer" ? ["react-hot", "babel-loader", "ts-loader"] : ["babel-loader", "ts-loader"]
+           
         },
         { test: /\.png|\.jpg|\.eot|\.woff|\.ttf|\.woff2|\.svg$/, loader: "url-loader?limit=100000" },
         {
