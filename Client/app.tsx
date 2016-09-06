@@ -10,12 +10,15 @@ import {RequestCardPage} from "./RequestCard/requestCardPage";
 
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
+import {Test} from "../RequestCardClient/test.ts";
+
 export class Layout extends React.Component<{children:any}, {}> {      
     render() {
         return <div className="sheet">{this.props.children}</div>;
     }
 }
 
+alert(Test());
 
 const appNode = document.getElementById("app");
 
