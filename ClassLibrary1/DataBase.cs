@@ -52,10 +52,23 @@ namespace ClassLibrary1
         public HashSet<ButtonEntry> Buttons { get; set; } = new HashSet<ButtonEntry>();
     }
 
+    public class ApprovalProcessEntry
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public Guid Id { get; set; }
+
+        public Guid WwfId { get; set; }
+        public string Bookmark { get; set; }
+        public string Info { get; set; }
+        public bool Approve { get; set; }
+        public string QueueName { get; set; }
+    }
+
     public class Db : DbContext
     {
         public DbSet<UserTaskEntry> UserTasks { get; set; }
         public DbSet<ButtonEntry> Buttons { get; set; }
         public DbSet<TaskCanceledWithCommentEntry> TaskCanceledWithComment { get; set; }
+        public DbSet<ApprovalProcessEntry> ApprovalProcess { get; set; }
     }
 }

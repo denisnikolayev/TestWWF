@@ -44,6 +44,17 @@ namespace WebApplication1.Controllers
         public string CommentText { get; set; }
     }
 
+    public class TaskInfoApprove
+    {
+        public string Name { get; set; }
+        public IEnumerable<InfoApprove> InfoText { get; set; }
+    }
+
+    public class InfoApprove
+    {
+        public string Info { get; set; }
+    }
+
     [RoutePrefix("api/wwf")]
     public class WWFController : ApiController
     {
@@ -106,6 +117,20 @@ namespace WebApplication1.Controllers
                     {
                         Name = g.Key,
                         InfoCanceled = g.Select(t => new InfoCanceled() { Caption = t.Caption, CommentText = t.TextComment})
+                    }).ToArray();
+            }
+        }
+
+        [HttpGet, Route("taskApprove")]
+        public TaskInfoApprove[] GetTaskApprove()
+        {
+            using (var db = new Db())
+            {
+                return db.ApprovalProcess.GroupBy(u => u.QueueName)
+                    .Select(g => new TaskInfoApprove()
+                    {
+                        Name = g.Key,
+                        InfoText = g.Select(t => new InfoApprove() { Info = t.Info })
                     }).ToArray();
             }
         }

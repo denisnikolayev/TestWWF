@@ -10,18 +10,27 @@ interface ICanceled {
     infoCanceled: { caption: string, commentText: number}[];
 }
 
-export class Index extends React.Component<{}, { queues: IQueue[], canceled: ICanceled[]}> {
+interface IApprove {
+    name: string;
+    infoText: { info: string}[];
+}
+
+export class Index extends React.Component<{}, { queues: IQueue[], canceled: ICanceled[], approve: IApprove[]}> {
    
     constructor() {
         super();
-        this.state = {queues:[], canceled:[]};
+        this.state = {queues:[], canceled:[], approve:[]};
 
         $.get(SERVER_URL + "/api/wwf/queues")
             .then((data: IQueue[]) => {
                 var queuesItem = data;
                 $.get(SERVER_URL + "/api/wwf/taskCanceled")
                     .then((data: ICanceled[]) => {
-                        this.setState({ queues: queuesItem, canceled: data});
+                        var taskCanceledItem = data;
+                        $.get(SERVER_URL + "/api/wwf/taskApprove")
+                            .then((data: IApprove[]) => {
+                                this.setState({ queues: queuesItem, canceled: taskCanceledItem, approve: data });
+                            }).fail((e) => alert(e));
                     }).fail((e) => alert(e));
             }).fail((e) => alert(e));
     }
@@ -47,11 +56,21 @@ export class Index extends React.Component<{}, { queues: IQueue[], canceled: ICa
             </div>
         );
 
+        var taskApprove = this.state.approve.map(q =>
+            <div key={q.name}>
+                <h3>{q.name}</h3>
+                <ul className="list-unstyled">
+                    {q.infoText.map(t => <li> <div>{t.info}</div></li>) }
+                </ul>
+            </div>
+        );
+
         return (
             <div>
                 <Link  className="btn  btn-primary" to="/RequestCard">Создать Заявку на выпуск карты</Link>
                 {body}  
                 {taskCanceled} 
+                {taskApprove} 
             </div>
             );
     }

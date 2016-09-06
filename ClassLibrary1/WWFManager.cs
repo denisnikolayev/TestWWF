@@ -102,7 +102,7 @@ namespace WebApplication1.WWF
 
             wf.Completed = e =>
             {
-              
+
             };
             wf.Unloaded = (e) => wait.Set();
             wf.Aborted = (e) =>
@@ -160,7 +160,67 @@ namespace WebApplication1.WWF
                 return instanceStore;
             }
         }
-    
+
+        public static void ContinueExecution(Db db, Activity activity, Guid id, string bookmark)
+        {
+            var wf = new WorkflowApplication(activity)
+            {
+                InstanceStore = InstanceStore
+            };
+
+            wf.Extensions.Add(db);
+            wf.Extensions.Add(new EntityFrameworkPersistenceIOParticipant(db));
+
+            wf.Load(id);
+
+            // ловим все ошибки и момент завершения работы wf
+            Exception innerException = null;
+
+            AutoResetEvent wait = new AutoResetEvent(false);
+            wf.OnUnhandledException = (e) =>
+            {
+                innerException = e.UnhandledException;
+                wait.Set();
+                return UnhandledExceptionAction.Abort;
+            };
+
+
+            wf.PersistableIdle = (e) => PersistableIdleAction.Unload;
+
+            wf.Completed = e =>
+            {
+            };
+            wf.Unloaded = (e) => wait.Set();
+            wf.Aborted = (e) =>
+            {
+                innerException = e.Reason;
+                wait.Set();
+            };
+
+            // запускаем
+            var resumeResult = wf.ResumeBookmark(bookmark, new object());
+            if (resumeResult != BookmarkResumptionResult.Success)
+            {
+                throw new ValidationException("Не удалось запустить рабочий процесс " + resumeResult.ToString());
+            }
+
+            wait.WaitOne();
+
+            if (innerException != null)
+            {
+                if (innerException is System.ComponentModel.DataAnnotations.ValidationException)
+                {
+                    throw innerException;
+                }
+
+                if (innerException.InnerException is System.ComponentModel.DataAnnotations.ValidationException)
+                {
+                    throw innerException.InnerException;
+                }
+
+                throw new Exception("Исключение в процессе (см. внутренее исключение)", innerException);
+            }
+        }
     }
 
 
