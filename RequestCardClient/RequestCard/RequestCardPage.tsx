@@ -9,9 +9,9 @@ import {Approve} from "./approve";
 import {NewClient} from "./newClient";
 import {Revision, IFullCardInfo} from "./revision";
 import {ICommentForStepModel} from "./commentForStep";
-import {Test} from "../../Client/Core/utils";
+//import {Test} from "../../Client/Core/utils";
 
-alert(Test());
+//alert(Test());
 
 interface IUserTask {
     id: string;
