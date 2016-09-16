@@ -238,6 +238,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeController.cs" />
     <Compile Include="Controllers\WWFController.cs" />
+    <Compile Include="DataModel\CM_ORG.cs" />
     <Compile Include="DataModel\UserTask.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
