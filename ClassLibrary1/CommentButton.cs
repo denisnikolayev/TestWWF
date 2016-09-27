@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Activities;
+using System.Activities.Presentation;
+using System.Activities.Presentation.View;
 using System.Activities.Statements;
 using System.ComponentModel;
 using Newtonsoft.Json;
@@ -10,6 +12,8 @@ using Newtonsoft.Json;
 namespace ClassLibrary1
 {
     [Designer(typeof(CommentButtonDesigner))]
+    [DefaultTypeArgument(typeof(EmptyModel))]
+  
     public class CommentButton<T> : NativeActivity
         where T:class
     {
@@ -80,4 +84,5 @@ namespace ClassLibrary1
             }
         }
     }
+
 }
