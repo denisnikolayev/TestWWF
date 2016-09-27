@@ -75,6 +75,12 @@ namespace WebApplication1.Controllers
         [HttpPost, Route("click")]
         public UserTaskEntry Click([FromBody]ClickArgument arg)
         {
+            //var qqq = 4;
+            //using (var session = NHibernateHelper.OpenSessionFactory()) 
+            //{
+            //        //var www = session.GetEntityName(new DataModel.UserTask()).ToList();
+            //        //transaction.Commit();
+            //}
             using (var db = new Db())
             {
                 var userTask = db.UserTasks.Find(arg.TaskId);
